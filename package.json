@@ -1,0 +1,23 @@
+{
+  "name": "portfolio-site",
+  "version": "1.0.0",
+  "description": "Modern portfolio and CV website",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "npx live-server src --port=3000",
+    "dev": "npx live-server src --port=3000 --watch=src",
+    "build": "echo 'Build step - add your build process here'"
+  },
+  "keywords": [
+    "portfolio",
+    "cv",
+    "resume",
+    "website",
+    "developer"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

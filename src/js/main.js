@@ -103,52 +103,58 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Intersection Observer for Animations
 // ===========================
 
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
+// Wait for content to be loaded before observing
+function initializeObservers() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
 
-const fadeInObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-            entry.target.classList.add('visible');
-            fadeInObserver.unobserve(entry.target);
-        }
+    const fadeInObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                entry.target.classList.add('visible');
+                fadeInObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements for animation
+    const animateElements = document.querySelectorAll('.project-card, .skill-card, .contact-card');
+    animateElements.forEach(el => fadeInObserver.observe(el));
+
+    // Observe project stats for staggered animation
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        const stats = card.querySelectorAll('.stat');
+        stats.forEach(stat => {
+            stat.style.opacity = '0';
+            stat.style.transform = 'translateY(20px)';
+        });
     });
-}, observerOptions);
 
-// Observe elements for animation
-const animateElements = document.querySelectorAll('.project-card, .skill-card, .contact-card');
-animateElements.forEach(el => fadeInObserver.observe(el));
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                const stats = entry.target.querySelectorAll('.stat');
+                stats.forEach((stat, index) => {
+                    setTimeout(() => {
+                        stat.style.opacity = '1';
+                        stat.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
 
-// Observe project stats for staggered animation
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    const stats = card.querySelectorAll('.stat');
-    stats.forEach(stat => {
-        stat.style.opacity = '0';
-        stat.style.transform = 'translateY(20px)';
-    });
-});
+    projectCards.forEach(card => statsObserver.observe(card));
+}
 
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            const stats = entry.target.querySelectorAll('.stat');
-            stats.forEach((stat, index) => {
-                setTimeout(() => {
-                    stat.style.opacity = '1';
-                    stat.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-            statsObserver.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-projectCards.forEach(card => statsObserver.observe(card));
+// Initialize observers after a short delay to ensure content is loaded
+setTimeout(initializeObservers, 100);
 
 // ===========================
 // Form Handling

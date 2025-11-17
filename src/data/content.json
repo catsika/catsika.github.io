@@ -1,0 +1,148 @@
+{
+  "personal": {
+    "name": "Clifford Atsika",
+    "title": "Full-Stack Software Engineer",
+    "tagline": "Building Production-Ready Software That Solves Real Problems",
+    "email": "atsikaclifford414@gmail.com",
+    "github": "catsika",
+    "githubUrl": "https://github.com/catsika",
+    "resumePath": "assets/resume.pdf"
+  },
+  "hero": {
+    "byline": {
+      "label": "PROFILE",
+      "date": "2025"
+    },
+    "meta": [
+      {
+        "label": "Role",
+        "value": "Full-Stack Software Engineer"
+      },
+      {
+        "label": "Focus",
+        "value": "SaaS Development & Automation"
+      },
+      {
+        "label": "Experience",
+        "value": "3+ Years"
+      }
+    ],
+    "lede": "A <strong>Full-Stack Software Engineer</strong> and <strong>SaaS Founder</strong> with 3+ years of experience transforming innovative ideas into robust, production-ready software solutions. Creator of <em>TidyList</em> and <em>Keymint.dev</em>, specializing in modern web applications, secure authentication systems, and technical SEO."
+  },
+  "about": {
+    "eyebrow": "Background",
+    "title": "About",
+    "intro": "I'm a Full-Stack Software Engineer and SaaS Founder with a passion for building production-ready solutions that solve real problems.",
+    "paragraphs": [
+      "With 3+ years of experience, I've successfully launched multiple software-as-a-service products including <strong>TidyList</strong>—an email verification platform processing thousands of emails daily with 98% accuracy—and <strong>Keymint.dev</strong>—a secure software licensing system serving over 100 active users with advanced cryptographic validation.",
+      "As a freelance developer, I've delivered 15+ custom full-stack web applications and automation tools to global clients, consistently meeting deadlines and exceeding expectations. My technical expertise spans from frontend interfaces to backend infrastructure, payment integrations, and secure cryptographic systems. I approach every project with a focus on clean code, scalability, and user experience."
+    ],
+    "quote": "Building software isn't just about writing code—it's about understanding problems deeply and crafting solutions that stand the test of time.",
+    "skills": [
+      {
+        "number": "01",
+        "title": "Frontend Development",
+        "description": "React.js, JavaScript, TypeScript, HTML5/CSS3, Tailwind CSS. Building responsive, modern user interfaces with focus on performance and user experience."
+      },
+      {
+        "number": "02",
+        "title": "Backend Development",
+        "description": "Node.js, Python, Supabase (PostgreSQL), Firebase, Neon.tech. Creating robust APIs and scalable backend systems with secure authentication."
+      },
+      {
+        "number": "03",
+        "title": "Security & Cryptography",
+        "description": "Cryptographic signatures, license key systems, public key verification. Implementing secure authentication and licensing solutions."
+      },
+      {
+        "number": "04",
+        "title": "SaaS Development",
+        "description": "Product development, Stripe integration, user authentication, analytics dashboards. Building complete software-as-a-service platforms from scratch."
+      },
+      {
+        "number": "05",
+        "title": "Desktop Applications",
+        "description": "PyQt development for creating cross-platform desktop applications. Built 5+ custom tools improving client productivity by up to 30%."
+      },
+      {
+        "number": "06",
+        "title": "SEO & Analytics",
+        "description": "Technical SEO, metadata structuring, keyword optimization, Google Search Console. Enhancing web visibility and search performance."
+      }
+    ]
+  },
+  "projects": {
+    "eyebrow": "Portfolio",
+    "title": "Selected Work",
+    "description": "A collection of software products and tools I've built, from concept to production.",
+    "items": [
+      {
+        "featured": true,
+        "title": "TidyList",
+        "subtitle": "Email Verification SaaS Platform",
+        "description": "Email verification SaaS platform processing thousands of emails daily with 98% accuracy. Complete full-stack solution with Stripe payments and RESTful API.",
+        "tags": ["Node.js", "React", "Supabase", "Stripe", "PostgreSQL"],
+        "link": null
+      },
+      {
+        "featured": true,
+        "title": "Keymint.dev",
+        "subtitle": "Software License Management System",
+        "description": "Developer-first licensing platform with cryptographic signature validation. Supports offline/online modes, serving 100+ active users with enterprise-grade security.",
+        "tags": ["React", "Node.js", "Cryptography", "PostgreSQL", "TypeScript"],
+        "link": {
+          "url": "https://keymint.dev",
+          "text": "Visit Keymint.dev"
+        }
+      },
+      {
+        "featured": false,
+        "title": "GitHub Email Scraper",
+        "subtitle": "Open Source CLI Tool",
+        "description": "Python CLI tool for efficiently scraping public contributor emails from GitHub repositories. Implements ethical scraping practices and reduced manual data collection time by 80%.",
+        "tags": ["Python", "CLI", "GitHub API", "Open Source"],
+        "link": {
+          "url": "https://github.com/catsika/github-email-scraper",
+          "text": "View on GitHub"
+        }
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Get In Touch",
+    "title": "Let's Connect",
+    "intro": "I'm always open to discussing new projects, collaboration opportunities, or simply connecting with fellow developers and entrepreneurs. Whether you have a product idea, need technical consulting, or want to explore working together, I'd love to hear from you.",
+    "methods": [
+      {
+        "number": "01",
+        "title": "Email",
+        "value": "atsikaclifford414@gmail.com",
+        "link": "mailto:atsikaclifford414@gmail.com"
+      },
+      {
+        "number": "02",
+        "title": "GitHub",
+        "value": "github.com/catsika",
+        "link": "https://github.com/catsika"
+      }
+    ],
+    "formTitle": "Send a Message"
+  },
+  "footer": {
+    "copyright": "2025 Clifford Atsika. All rights reserved.",
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/catsika"
+      },
+      {
+        "text": "Email",
+        "url": "mailto:atsikaclifford414@gmail.com"
+      },
+      {
+        "text": "Resume",
+        "url": "assets/resume.pdf"
+      }
+    ]
+  }
+}

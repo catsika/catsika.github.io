@@ -4,6 +4,8 @@
     "title": "Full-Stack Software Engineer",
     "tagline": "Building Production-Ready Software That Solves Real Problems",
     "email": "atsikaclifford414@gmail.com",
+    "phone": "+233244123456",
+    "location": "Accra, Ghana",
     "github": "catsika",
     "githubUrl": "https://github.com/catsika",
     "resumePath": "assets/resume.pdf"
@@ -127,6 +129,87 @@
       }
     ],
     "formTitle": "Send a Message"
+  },
+  "resume": {
+    "objective": "Full-Stack Software Engineer with 3+ years building scalable SaaS platforms, secure cryptographic systems, and automation solutions. Eager to contribute technical expertise in a collaborative setting.",
+    "experience": [
+      {
+        "title": "Freelance Full-Stack Developer",
+        "company": "Self-Employed",
+        "location": "Remote, Ghana",
+        "period": "2021 - Present",
+        "achievements": [
+          "Delivered 15+ custom web applications and automation tools to clients across 5 countries",
+          "Developed 5+ PyQt desktop applications improving client productivity by 30%",
+          "Integrated secure Stripe billing systems for 8+ platforms, enhancing payment security",
+          "Managed 20+ projects across global time zones with 100% client satisfaction",
+          "Optimized client websites for SEO, increasing organic traffic by 40% average"
+        ]
+      },
+      {
+        "title": "Founder & Lead Developer",
+        "company": "TidyList",
+        "location": "Remote",
+        "period": "Jan 2024 - Jun 2024",
+        "achievements": [
+          "Architected email verification SaaS processing thousands of emails daily",
+          "Achieved 98% accuracy in email validation using custom algorithms",
+          "Implemented Stripe payment processing and subscription management",
+          "Built RESTful API with comprehensive documentation",
+          "Managed end-to-end infrastructure with 99.9% uptime"
+        ]
+      },
+      {
+        "title": "Founder & Software Engineer",
+        "company": "Keymint.dev",
+        "location": "Remote",
+        "period": "Jan 2023 - Jun 2024",
+        "achievements": [
+          "Developed cryptographic licensing platform serving 100+ active users",
+          "Implemented Ed25519 signature-based online/offline license validation",
+          "Created developer-friendly SDK and API with multi-language examples",
+          "Built admin dashboard with real-time analytics",
+          "Designed secure key generation preventing unauthorized distribution"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor of Science in Computer Science",
+        "institution": "Ghana Communication Technology University",
+        "location": "Accra, Ghana",
+        "period": "2021 - 2025",
+        "honors": null,
+        "relevant": [
+          "Software Engineering",
+          "Web Development",
+          "Operating Systems",
+          "Databases",
+          "Networking",
+          "Human-Computer Interaction (HCI)",
+          "Cybersecurity"
+        ]
+      }
+    ],
+    "certifications": [],
+    "achievements": [
+      "Published open-source GitHub Email Scraper used by 200+ developers",
+      "Reduced data collection time by 80% for research teams",
+      "Contributed to 10+ open-source projects with 500+ combined stars"
+    ],
+    "languages": [
+      {
+        "language": "English",
+        "proficiency": "Fluent"
+      }
+    ],
+    "interests": [
+      "Open Source Contribution",
+      "Technical Writing",
+      "UI/UX Design",
+      "Automation",
+      "Developer Tools"
+    ]
   },
   "footer": {
     "copyright": "2025 Clifford Atsika. All rights reserved.",

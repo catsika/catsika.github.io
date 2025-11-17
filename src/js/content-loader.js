@@ -12,6 +12,9 @@ async function loadContent() {
         contentData = await response.json();
         populateContent();
         console.log('✅ Content loaded successfully from JSON');
+        
+        // Dispatch event for other scripts
+        window.dispatchEvent(new CustomEvent('contentLoaded', { detail: contentData }));
     } catch (error) {
         console.error('❌ Error loading content:', error);
         console.log('ℹ️ Content will use HTML fallback. To use JSON content, run a local server:');

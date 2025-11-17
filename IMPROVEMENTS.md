@@ -149,6 +149,7 @@
 - ✅ Shimmer loading effect on images
 - ✅ Gradient effects
 - ✅ Advanced hover states
+- ✅ **Dynamic PDF Resume Generator** - Creates professional PDF from JSON data
 
 ## 📊 Code Quality
 
@@ -192,6 +193,22 @@ Your portfolio is now production-ready with:
 - ✅ **Add/remove projects with simple JSON editing**
 - ✅ **Change skills, contact info, and all text content**
 - ✅ **Automatic rendering with `content-loader.js`**
+- ✅ **Dynamic PDF Resume Generation** - Click resume link to generate PDF from JSON
+
+### How PDF Resume Works:
+1. Click any "Resume" link on the site
+2. PDF is generated in real-time from your JSON content
+3. Professional layout with:
+   - Header with name and contact info
+   - Professional summary
+   - Core competencies
+   - Technical skills breakdown
+   - Key projects with descriptions
+   - Technologies used
+   - Auto-paginated
+   - Page numbers and generation date
+
+No need to maintain a separate resume file!
 
 See `CONTENT_GUIDE.md` for detailed instructions on updating content.
 

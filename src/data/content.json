@@ -76,7 +76,7 @@
         "featured": true,
         "title": "Keymint.dev",
         "subtitle": "Software License Management System",
-        "description": "A secure, scalable software licensing service for developers, featuring a REST API, a vendor dashboard, and support for multiple licensing models. Keymint provides actionable insights and empowers developers to manage their software with ease.",
+        "description": "A secure, scalable software licensing service for developers, featuring a REST API and a vendor dashboard to manage product licenses with ease.",
         "link": {
           "url": "https://keymint.dev",
           "text": "Visit Keymint.dev"
@@ -115,7 +115,7 @@
     "formTitle": "Send a Message"
   },
   "resume": {
-    "objective": "Full-Stack Software Engineer with 5+ years building scalable SaaS platforms, secure cryptographic systems, and automation solutions. Eager to contribute technical expertise in a collaborative setting.",
+    "objective": "A results-oriented Full-Stack Software Engineer with 3+ years of experience in designing, developing, and deploying scalable SaaS platforms and automation tools. Proven ability to translate complex business requirements into high-quality, production-ready software.",
     "experience": [
       {
         "title": "Freelance Full-Stack Developer",

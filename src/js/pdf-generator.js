@@ -79,16 +79,16 @@ async function generateResumePDF(contentData) {
 
         const addSection = (title, startY) => {
             y = startY || y;
-            checkPageBreak(15);
+            checkPageBreak(16); // more space for better grouping
             doc.setFont(fonts.sectionTitle.family, fonts.sectionTitle.style);
             doc.setFontSize(fonts.sectionTitle.size);
             doc.setTextColor(colors.primary);
             doc.text(title.toUpperCase(), layout.margin, y);
-            y += layout.lineHeight * 2;
+            y += layout.lineHeight * 1.7; // more space after title
             doc.setDrawColor(colors.line);
-            doc.setLineWidth(0.5);
+            doc.setLineWidth(0.4);
             doc.line(layout.margin, y, pageWidth - layout.margin, y);
-            y += layout.sectionSpacing;
+            y += 5; // more space after line
         };
 
         // --- PDF Structure ---
@@ -132,14 +132,13 @@ async function generateResumePDF(contentData) {
         if (projects.items && projects.items.length > 0) {
             addSection('Projects');
             projects.items.forEach((project, index) => {
-                checkPageBreak(25);
-                
+                checkPageBreak(30);
                 // Project title in uppercase
                 doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
                 doc.setFontSize(fonts.jobTitle.size);
                 doc.setTextColor(colors.primary);
                 doc.text(project.title.toUpperCase(), layout.margin, y);
-                y += layout.lineHeight * 1.2;
+                y += layout.lineHeight * 1.5;
 
                 // Project subtitle/description
                 if (project.subtitle) {
@@ -147,13 +146,13 @@ async function generateResumePDF(contentData) {
                     doc.setFontSize(fonts.italic.size);
                     doc.setTextColor(colors.secondary);
                     doc.text(project.subtitle, layout.margin, y);
-                    y += layout.lineHeight * 1.2;
+                    y += layout.lineHeight * 1.3;
                 }
 
                 // Project description with bullets
                 const descLines = project.description.split('\n').filter(line => line.trim());
                 descLines.forEach(line => {
-                    checkPageBreak(8);
+                    checkPageBreak(10);
                     const bullet = '•';
                     const bulletWidth = 4;
                     doc.setFont(fonts.body.family, fonts.body.style);
@@ -168,20 +167,20 @@ async function generateResumePDF(contentData) {
                         maxWidth: pageWidth - (layout.margin * 2) - bulletWidth,
                         lineHeight: 4
                     });
-                    y += textHeight + 1;
+                    y += textHeight + 2.5;
                 });
                 
                 if (index < projects.items.length - 1) {
-                    y += 4;
+                    y += 8;
                 }
             });
-            y += layout.sectionSpacing;
+            y += layout.sectionSpacing + 4;
         }
         
         // 4. Professional Experience
         addSection('Professional Experience');
         resume.experience.forEach((job, index) => {
-            checkPageBreak(25);
+            checkPageBreak(30);
             
             // Job title and period on same line
             doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
@@ -193,18 +192,18 @@ async function generateResumePDF(contentData) {
             doc.setFontSize(fonts.small.size);
             doc.setTextColor(colors.secondary);
             doc.text(job.period, pageWidth - layout.margin, y, { align: 'right' });
-            y += layout.lineHeight * 1.2;
+            y += layout.lineHeight * 1.5;
 
             // Company and location
             doc.setFont(fonts.body.family, fonts.body.style);
             doc.setFontSize(fonts.body.size);
             doc.setTextColor(colors.secondary);
             doc.text(`${job.company}, ${job.location}`, layout.margin, y);
-            y += layout.lineHeight * 1.5;
+            y += layout.lineHeight * 1.7;
             
             // Achievements
             job.achievements.forEach(achievement => {
-                checkPageBreak(8);
+                checkPageBreak(10);
                 const bullet = '•';
                 const bulletWidth = 4;
                 doc.setFont(fonts.body.family, fonts.body.style);
@@ -219,19 +218,19 @@ async function generateResumePDF(contentData) {
                     maxWidth: pageWidth - (layout.margin * 2) - bulletWidth,
                     lineHeight: 4
                 });
-                y += textHeight + 1;
+                y += textHeight + 2.5;
             });
             
             if (index < resume.experience.length - 1) {
-                y += 4;
+                y += 10;
             }
         });
-        y += layout.sectionSpacing;
+        y += layout.sectionSpacing + 4;
 
         // 5. Education Section
         addSection('Education');
         resume.education.forEach((edu, index) => {
-            checkPageBreak(15);
+            checkPageBreak(18);
             
             // Institution name and period
             doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
@@ -243,61 +242,88 @@ async function generateResumePDF(contentData) {
             doc.setFontSize(fonts.small.size);
             doc.setTextColor(colors.secondary);
             doc.text(edu.period, pageWidth - layout.margin, y, { align: 'right' });
-            y += layout.lineHeight * 1.2;
+            y += layout.lineHeight * 1.5;
 
             // Degree
             doc.setFont(fonts.body.family, fonts.body.style);
             doc.setFontSize(fonts.body.size);
             doc.setTextColor(colors.secondary);
             doc.text(edu.degree, layout.margin, y);
-            
             if (index < resume.education.length - 1) {
-                y += layout.lineHeight * 2;
+                y += layout.lineHeight * 2.5;
             } else {
-                y += layout.lineHeight * 1.5;
+                y += layout.lineHeight * 2;
             }
         });
-        y += layout.sectionSpacing;
+        y += layout.sectionSpacing + 4;
 
         // 6. Skills and Interests Section
         addSection('Skills and Interests');
-        
-        about.skills.forEach(skill => {
-            checkPageBreak(15);
-            doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
-            doc.setFontSize(fonts.jobTitle.size);
-            doc.setTextColor(colors.primary);
-            doc.text(skill.title, layout.margin, y);
-            y += layout.lineHeight * 1.2;
-
-            const textHeight = addWrappedText(skill.description, {
-                x: layout.margin,
-                font: fonts.body,
-                color: colors.secondary,
-                maxWidth: pageWidth - (layout.margin * 2),
-                lineHeight: 4
-            });
-            y += textHeight + 4;
-        });
-        
-        y += layout.sectionSpacing;
+        // Group skills by category if available, otherwise list titles
+        if (about.skills && about.skills.length > 0) {
+            // Check if skills have a 'category' property
+            const hasCategory = about.skills.some(skill => skill.category);
+            if (hasCategory) {
+                // Group by category
+                const grouped = {};
+                about.skills.forEach(skill => {
+                    const cat = skill.category || 'Other';
+                    if (!grouped[cat]) grouped[cat] = [];
+                    grouped[cat].push(skill.title);
+                });
+                Object.entries(grouped).forEach(([cat, skills]) => {
+                    checkPageBreak(12);
+                    doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
+                    doc.setFontSize(fonts.jobTitle.size);
+                    doc.setTextColor(colors.primary);
+                    doc.text(cat, layout.margin, y);
+                    y += layout.lineHeight * 1.2;
+                    skills.forEach(skillTitle => {
+                        checkPageBreak(8);
+                        const bullet = '•';
+                        const bulletWidth = 4;
+                        doc.setFont(fonts.body.family, fonts.body.style);
+                        doc.setFontSize(fonts.body.size);
+                        doc.setTextColor(colors.primary);
+                        doc.text(bullet, layout.margin, y);
+                        doc.text(skillTitle, layout.margin + bulletWidth, y);
+                        y += layout.lineHeight * 1.1;
+                    });
+                    y += 4;
+                });
+            } else {
+                // No categories, just list all skill titles as bullets
+                about.skills.forEach(skill => {
+                    checkPageBreak(8);
+                    const bullet = '•';
+                    const bulletWidth = 4;
+                    doc.setFont(fonts.body.family, fonts.body.style);
+                    doc.setFontSize(fonts.body.size);
+                    doc.setTextColor(colors.primary);
+                    doc.text(bullet, layout.margin, y);
+                    doc.text(skill.title, layout.margin + bulletWidth, y);
+                    y += layout.lineHeight * 1.1;
+                });
+            }
+        }
+        y += layout.sectionSpacing + 4;
 
         // 7. Reference Section (if applicable)
         if (resume.references && resume.references.length > 0) {
             addSection('Reference');
             resume.references.forEach(ref => {
-                checkPageBreak(12);
+                checkPageBreak(16);
                 doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
                 doc.setFontSize(fonts.jobTitle.size);
                 doc.setTextColor(colors.primary);
                 doc.text(ref.name, layout.margin, y);
-                y += layout.lineHeight * 1.2;
+                y += layout.lineHeight * 1.5;
 
                 doc.setFont(fonts.body.family, fonts.body.style);
                 doc.setFontSize(fonts.body.size);
                 doc.setTextColor(colors.secondary);
                 doc.text(ref.title, layout.margin, y);
-                y += layout.lineHeight * 1.5;
+                y += layout.lineHeight * 2;
             });
         }
 
@@ -488,7 +514,7 @@ function initResumeGenerator(contentData) {
             .preview-achievements { list-style: none; padding-left: 15px; margin: 0; }
             .preview-achievements li { position: relative; margin-bottom: 6px; font-size: 11px; line-height: 1.6; font-family: 'Helvetica', sans-serif; }
             .preview-achievements li:before { content: "•"; position: absolute; left: -15px; color: #333; }
-            .preview-project-description { font-size: 11px; line-height: 1.6; font-family: 'Helvetica', sans-serif; }
+            .preview-project_description { font-size: 11px; line-height: 1.6; font-family: 'Helvetica', sans-serif; }
             .resume-preview-footer { display: flex; justify-content: flex-end; gap: 15px; padding: 20px 30px; border-top: 1px solid #EAEAEA; }
             .btn-primary, .btn-secondary { padding: 10px 24px; border: 1px solid; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
             .btn-primary { background: #000; color: white; border-color: #000; }

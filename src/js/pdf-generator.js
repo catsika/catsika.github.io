@@ -19,529 +19,297 @@ function loadJsPDF() {
     });
 }
 
-// Show preview modal
-function showPreviewModal(contentData) {
-    const { personal, hero, about, projects, resume } = contentData;
-    
-    // Create modal HTML
-    const modalHTML = `
-        <div id="resumePreviewModal" class="resume-preview-modal">
-            <div class="resume-preview-container">
-                <div class="resume-preview-header">
-                    <h2>Resume Preview</h2>
-                    <button class="close-preview" onclick="closePreviewModal()">&times;</button>
-                </div>
-                <div class="resume-preview-content">
-                    <!-- Header -->
-                    <div class="preview-section preview-header">
-                        <h1>${personal.name}</h1>
-                        <p class="preview-title">${personal.title}</p>
-                        <div class="preview-contact">
-                            <span>${personal.email}</span>
-                            ${personal.phone ? `<span>${personal.phone}</span>` : ''}
-                            <span>${personal.location || ''}</span>
-                            <span><a href="${personal.githubUrl}" target="_blank">${personal.githubUrl}</a></span>
-                        </div>
+// Resume Preview Generator
+const resumePreview = {
+    // Main function to create and show the modal
+    show(contentData) {
+        // Remove any existing modal before adding a new one
+        const existingModal = document.getElementById('resumePreviewModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        const { personal, hero, about, projects, resume } = contentData;
+        
+        const modalHTML = `
+            <div id="resumePreviewModal" class="resume-preview-modal">
+                <div class="resume-preview-container">
+                    <div class="resume-preview-header">
+                        <h2>Resume Preview</h2>
+                        <button class="close-preview" onclick="closePreviewModal()">&times;</button>
                     </div>
-                    
-                    <!-- Professional Summary -->
-                    <div class="preview-section">
-                        <h3 class="preview-heading">PROFESSIONAL SUMMARY</h3>
-                        <p>${resume.objective}</p>
+                    <div class="resume-preview-content">
+                        ${this.renderHeader(personal)}
+                        ${this.renderSummary(resume)}
+                        ${this.renderCompetencies(hero)}
+                        ${this.renderSkills(about)}
+                        ${this.renderExperience(resume)}
+                        ${this.renderProjects(projects)}
+                        ${this.renderEducation(resume)}
+                        ${this.renderCertifications(resume)}
+                        ${this.renderAchievements(resume)}
+                        ${this.renderLanguagesAndInterests(resume)}
                     </div>
-                    
-                    <!-- Core Competencies -->
-                    <div class="preview-section">
-                        <h3 class="preview-heading">CORE COMPETENCIES</h3>
-                        <ul class="preview-meta">
-                            ${hero.meta.map(item => `<li><strong>${item.label}:</strong> ${item.value}</li>`).join('')}
-                        </ul>
+                    <div class="resume-preview-footer">
+                        <button class="btn-secondary" onclick="closePreviewModal()">Cancel</button>
+                        <button class="btn-primary" onclick="downloadResumeFromPreview()">Download PDF</button>
                     </div>
-                    
-                    <!-- Technical Skills -->
-                    <div class="preview-section">
-                        <h3 class="preview-heading">TECHNICAL SKILLS</h3>
-                        ${about.skills.map(skill => `
-                            <div class="preview-skill">
-                                <strong>${skill.title}</strong>
-                                <p>${skill.description}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    <!-- Professional Experience -->
-                    ${resume.experience && resume.experience.length > 0 ? `
-                    <div class="preview-section">
-                        <h3 class="preview-heading">PROFESSIONAL EXPERIENCE</h3>
-                        ${resume.experience.map(job => `
-                            <div class="preview-job">
-                                <div class="preview-job-header">
-                                    <div>
-                                        <strong>${job.title}</strong>
-                                        <p class="preview-company">${job.company} | ${job.location}</p>
-                                    </div>
-                                    <span class="preview-period">${job.period}</span>
-                                </div>
-                                <ul class="preview-achievements">
-                                    ${job.achievements.map(ach => `<li>${ach}</li>`).join('')}
-                                </ul>
-                            </div>
-                        `).join('')}
-                    </div>
-                    ` : ''}
-                    
-                    <!-- Key Projects -->
-                    <div class="preview-section">
-                        <h3 class="preview-heading">KEY PROJECTS</h3>
-                        ${projects.items.map(project => `
-                            <div class="preview-project">
-                                <div class="preview-project-header">
-                                    <strong>${project.title}</strong>
-                                    <span class="preview-subtitle">${project.subtitle}</span>
-                                </div>
-                                <p>${project.description}</p>
-                                <p class="preview-tags"><strong>Technologies:</strong> ${project.tags.join(', ')}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    <!-- Education -->
-                    ${resume.education && resume.education.length > 0 ? `
-                    <div class="preview-section">
-                        <h3 class="preview-heading">EDUCATION</h3>
-                        ${resume.education.map(edu => `
-                            <div class="preview-edu">
-                                <div class="preview-edu-header">
-                                    <div>
-                                        <strong>${edu.degree}</strong>
-                                        <p class="preview-institution">${edu.institution}, ${edu.location}</p>
-                                        ${edu.honors ? `<p class="preview-honors">${edu.honors}</p>` : ''}
-                                    </div>
-                                    <span class="preview-period">${edu.period}</span>
-                                </div>
-                                ${edu.relevant && edu.relevant.length > 0 ? `
-                                    <p class="preview-coursework"><strong>Relevant Coursework:</strong> ${edu.relevant.join(', ')}</p>
-                                ` : ''}
-                            </div>
-                        `).join('')}
-                    </div>
-                    ` : ''}
-                    
-                    <!-- Certifications -->
-                    ${resume.certifications && resume.certifications.length > 0 ? `
-                    <div class="preview-section">
-                        <h3 class="preview-heading">CERTIFICATIONS</h3>
-                        <ul class="preview-list">
-                            ${resume.certifications.map(cert => `
-                                <li><strong>${cert.name}</strong> - ${cert.issuer} (${cert.date})</li>
-                            `).join('')}
-                        </ul>
-                    </div>
-                    ` : ''}
-                    
-                    <!-- Achievements -->
-                    ${resume.achievements && resume.achievements.length > 0 ? `
-                    <div class="preview-section">
-                        <h3 class="preview-heading">KEY ACHIEVEMENTS</h3>
-                        <ul class="preview-list">
-                            ${resume.achievements.map(ach => `<li>${ach}</li>`).join('')}
-                        </ul>
-                    </div>
-                    ` : ''}
-                    
-                    <!-- Languages & Interests -->
-                    <div class="preview-section preview-two-col">
-                        ${resume.languages && resume.languages.length > 0 ? `
-                        <div>
-                            <h3 class="preview-heading">LANGUAGES</h3>
-                            <ul class="preview-list">
-                                ${resume.languages.map(lang => `<li><strong>${lang.language}:</strong> ${lang.proficiency}</li>`).join('')}
-                            </ul>
-                        </div>
-                        ` : ''}
-                        ${resume.interests && resume.interests.length > 0 ? `
-                        <div>
-                            <h3 class="preview-heading">INTERESTS</h3>
-                            <ul class="preview-list">
-                                ${resume.interests.map(interest => `<li>${interest}</li>`).join('')}
-                            </ul>
-                        </div>
-                        ` : ''}
-                    </div>
-                </div>
-                <div class="resume-preview-footer">
-                    <button class="btn-secondary" onclick="closePreviewModal()">Cancel</button>
-                    <button class="btn-primary" onclick="downloadResumeFromPreview()">Download PDF</button>
                 </div>
             </div>
-        </div>
-    `;
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        this.addStyles();
+        window.resumeContentData = contentData;
+    },
+
+    // Render different sections
+    renderHeader(personal) {
+        return `
+            <div class="preview-section preview-header">
+                <h1>${personal.name}</h1>
+                <p class="preview-title">${personal.title}</p>
+                <div class="preview-contact">
+                    <span>${personal.email}</span>
+                    ${personal.phone ? `<span>${personal.phone}</span>` : ''}
+                    <span>${personal.location || ''}</span>
+                    <span><a href="${personal.githubUrl}" target="_blank">${personal.githubUrl}</a></span>
+                </div>
+            </div>
+        `;
+    },
+
+    renderSummary(resume) {
+        return `
+            <div class="preview-section">
+                <h3 class="preview-heading">PROFESSIONAL SUMMARY</h3>
+                <p>${resume.objective}</p>
+            </div>
+        `;
+    },
+
+    renderCompetencies(hero) {
+        return `
+            <div class="preview-section">
+                <h3 class="preview-heading">CORE COMPETENCIES</h3>
+                <ul class="preview-meta">
+                    ${hero.meta.map(item => `<li><strong>${item.label}:</strong> ${item.value}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    },
+
+    renderSkills(about) {
+        return `
+            <div class="preview-section">
+                <h3 class="preview-heading">TECHNICAL SKILLS</h3>
+                ${about.skills.map(skill => `
+                    <div class="preview-skill">
+                        <strong>${skill.title}</strong>
+                        <p>${skill.description}</p>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    },
+
+    renderExperience(resume) {
+        if (!resume.experience || resume.experience.length === 0) return '';
+        return `
+            <div class="preview-section">
+                <h3 class="preview-heading">PROFESSIONAL EXPERIENCE</h3>
+                ${resume.experience.map(job => `
+                    <div class="preview-job">
+                        <div class="preview-job-header">
+                            <div>
+                                <strong>${job.title}</strong>
+                                <p class="preview-company">${job.company} | ${job.location}</p>
+                            </div>
+                            <span class="preview-period">${job.period}</span>
+                        </div>
+                        <ul class="preview-achievements">
+                            ${job.achievements.map(ach => `<li>${ach}</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    },
+
+    renderProjects(projects) {
+        return `
+            <div class="preview-section">
+                <h3 class="preview-heading">KEY PROJECTS</h3>
+                ${projects.items.map(project => `
+                    <div class="preview-project">
+                        <div class="preview-project-header">
+                            <strong>${project.title}</strong>
+                            <span class="preview-subtitle">${project.subtitle}</span>
+                        </div>
+                        <p class="preview-project-description">${project.description}</p>
+                        <p class="preview-tags"><strong>Technologies:</strong> ${project.tags.join(', ')}</p>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    },
+
+    renderEducation(resume) {
+        if (!resume.education || resume.education.length === 0) return '';
+        return `
+            <div class="preview-section">
+                <h3 class="preview-heading">EDUCATION</h3>
+                ${resume.education.map(edu => `
+                    <div class="preview-edu">
+                        <div class="preview-edu-header">
+                            <div>
+                                <strong>${edu.degree}</strong>
+                                <p class="preview-institution">${edu.institution}, ${edu.location}</p>
+                                ${edu.honors && edu.honors.length > 0 ? `<p class="preview-honors">${edu.honors.join(', ')}</p>` : ''}
+                            </div>
+                            <span class="preview-period">${edu.period}</span>
+                        </div>
+                        ${edu.relevant && edu.relevant.length > 0 ? `
+                            <p class="preview-coursework"><strong>Relevant Coursework:</strong> ${edu.relevant.join(', ')}</p>
+                        ` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    },
+
+    renderCertifications(resume) {
+        if (!resume.certifications || resume.certifications.length === 0) return '';
+        return `
+            <div class="preview-section">
+                <h3 class="preview-heading">CERTIFICATIONS</h3>
+                <ul class="preview-list">
+                    ${resume.certifications.map(cert => `
+                        <li><strong>${cert.name}</strong> - ${cert.issuer} (${cert.date})</li>
+                    `).join('')}
+                </ul>
+            </div>
+        `;
+    },
+
+    renderAchievements(resume) {
+        if (!resume.achievements || resume.achievements.length === 0) return '';
+        return `
+            <div class="preview-section">
+                <h3 class="preview-heading">KEY ACHIEVEMENTS</h3>
+                <ul class="preview-list">
+                    ${resume.achievements.map(ach => `<li>${ach}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    },
+
+    renderLanguagesAndInterests(resume) {
+        const languages = (resume.languages && resume.languages.length > 0) ? `
+            <div>
+                <h3 class="preview-heading">LANGUAGES</h3>
+                <ul class="preview-list">
+                    ${resume.languages.map(lang => `<li><strong>${lang.language}:</strong> ${lang.proficiency}</li>`).join('')}
+                </ul>
+            </div>
+        ` : '';
+        const interests = (resume.interests && resume.interests.length > 0) ? `
+            <div>
+                <h3 class="preview-heading">INTERESTS</h3>
+                <ul class="preview-list">
+                    ${resume.interests.map(interest => `<li>${interest}</li>`).join('')}
+                </ul>
+            </div>
+        ` : '';
+
+        if (!languages && !interests) return '';
+        
+        return `<div class="preview-section preview-two-col">${languages}${interests}</div>`;
+    },
     
-    // Add modal to page
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    
-    // Add modal styles if not already present
-    if (!document.getElementById('resumePreviewStyles')) {
+    // Add modal styles to the page
+    addStyles() {
+        if (document.getElementById('resumePreviewStyles')) return;
         const styles = document.createElement('style');
         styles.id = 'resumePreviewStyles';
         styles.textContent = `
             .resume-preview-modal {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10000;
-                padding: 20px;
-                animation: fadeIn 0.3s ease;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center;
+                z-index: 10000; padding: 20px; animation: fadeIn 0.3s ease;
             }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            
+            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
             .resume-preview-container {
-                background: white;
-                border-radius: 8px;
-                max-width: 900px;
-                width: 100%;
-                max-height: 90vh;
-                display: flex;
-                flex-direction: column;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                animation: slideUp 0.3s ease;
+                background: white; border-radius: 8px; max-width: 900px; width: 100%;
+                max-height: 90vh; display: flex; flex-direction: column;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); animation: slideUp 0.3s ease;
             }
-            
-            @keyframes slideUp {
-                from { transform: translateY(20px); opacity: 0; }
-                to { transform: translateY(0); opacity: 1; }
-            }
-            
+            @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
             .resume-preview-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 20px 30px;
-                border-bottom: 2px solid #e0e0e0;
+                display: flex; justify-content: space-between; align-items: center;
+                padding: 20px 30px; border-bottom: 2px solid #e0e0e0;
             }
-            
-            .resume-preview-header h2 {
-                margin: 0;
-                font-size: 24px;
-                color: #121212;
-            }
-            
+            .resume-preview-header h2 { margin: 0; font-size: 24px; color: #121212; }
             .close-preview {
-                background: none;
-                border: none;
-                font-size: 32px;
-                color: #666;
-                cursor: pointer;
-                line-height: 1;
-                padding: 0;
-                width: 32px;
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: color 0.2s;
+                background: none; border: none; font-size: 32px; color: #666; cursor: pointer;
+                line-height: 1; padding: 0; width: 32px; height: 32px;
+                display: flex; align-items: center; justify-content: center; transition: color 0.2s;
             }
-            
-            .close-preview:hover {
-                color: #121212;
-            }
-            
-            .resume-preview-content {
-                flex: 1;
-                overflow-y: auto;
-                padding: 30px;
-                background: #f9f9f9;
-            }
-            
-            .preview-section {
-                background: white;
-                padding: 20px;
-                margin-bottom: 20px;
-                border-radius: 6px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-            
-            .preview-header {
-                background: #326891;
-                color: white;
-                text-align: center;
-            }
-            
-            .preview-header h1 {
-                margin: 0 0 5px 0;
-                font-size: 32px;
-            }
-            
-            .preview-title {
-                font-size: 18px;
-                margin: 0 0 15px 0;
-                opacity: 0.95;
-            }
-            
-            .preview-contact {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-                font-size: 14px;
-            }
-            
-            .preview-contact a {
-                color: white;
-                text-decoration: underline;
-            }
-            
-            .preview-heading {
-                color: #326891;
-                font-size: 18px;
-                font-weight: bold;
-                margin: 0 0 15px 0;
-                padding-bottom: 8px;
-                border-bottom: 2px solid #326891;
-            }
-            
-            .preview-section p {
-                margin: 0 0 10px 0;
-                line-height: 1.6;
-                color: #333;
-            }
-            
-            .preview-meta {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            
-            .preview-meta li {
-                margin-bottom: 8px;
-                color: #333;
-            }
-            
-            .preview-skill {
-                margin-bottom: 15px;
-            }
-            
-            .preview-skill strong {
-                color: #326891;
-                display: block;
-                margin-bottom: 5px;
-            }
-            
-            .preview-skill p {
-                color: #666;
-                font-size: 14px;
-                margin: 0;
-            }
-            
-            .preview-job {
-                margin-bottom: 20px;
-            }
-            
-            .preview-job:last-child {
-                margin-bottom: 0;
-            }
-            
-            .preview-job-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                margin-bottom: 10px;
-            }
-            
-            .preview-job-header strong {
-                font-size: 16px;
-                color: #121212;
-                display: block;
-            }
-            
-            .preview-company {
-                color: #326891;
-                margin: 3px 0 0 0;
-                font-size: 14px;
-            }
-            
-            .preview-period {
-                color: #666;
-                font-size: 14px;
-                font-style: italic;
-                white-space: nowrap;
-            }
-            
-            .preview-achievements {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            
-            .preview-achievements li {
-                position: relative;
-                padding-left: 20px;
-                margin-bottom: 6px;
-                color: #333;
-                font-size: 14px;
-                line-height: 1.5;
-            }
-            
-            .preview-achievements li:before {
-                content: "•";
-                position: absolute;
-                left: 0;
-                color: #326891;
-                font-weight: bold;
-            }
-            
-            .preview-project {
-                margin-bottom: 20px;
-            }
-            
-            .preview-project:last-child {
-                margin-bottom: 0;
-            }
-            
-            .preview-project-header {
-                display: flex;
-                gap: 10px;
-                align-items: baseline;
-                margin-bottom: 8px;
-            }
-            
-            .preview-project-header strong {
-                color: #121212;
-            }
-            
-            .preview-subtitle {
-                color: #666;
-                font-style: italic;
-                font-size: 14px;
-            }
-            
-            .preview-tags {
-                color: #666;
-                font-size: 14px;
-                margin-top: 8px;
-            }
-            
-            .preview-edu {
-                margin-bottom: 20px;
-            }
-            
-            .preview-edu:last-child {
-                margin-bottom: 0;
-            }
-            
-            .preview-edu-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                margin-bottom: 8px;
-            }
-            
-            .preview-institution {
-                color: #326891;
-                margin: 3px 0;
-                font-size: 14px;
-            }
-            
-            .preview-honors {
-                color: #666;
-                font-style: italic;
-                font-size: 14px;
-                margin: 3px 0 0 0;
-            }
-            
-            .preview-coursework {
-                color: #666;
-                font-size: 14px;
-                margin-top: 8px;
-            }
-            
-            .preview-list {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            
-            .preview-list li {
-                position: relative;
-                padding-left: 20px;
-                margin-bottom: 6px;
-                color: #333;
-                font-size: 14px;
-            }
-            
-            .preview-list li:before {
-                content: "•";
-                position: absolute;
-                left: 0;
-                color: #326891;
-                font-weight: bold;
-            }
-            
-            .preview-two-col {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 30px;
-            }
-            
-            @media (max-width: 768px) {
-                .preview-two-col {
-                    grid-template-columns: 1fr;
-                }
-            }
-            
-            .resume-preview-footer {
-                display: flex;
-                justify-content: flex-end;
-                gap: 15px;
-                padding: 20px 30px;
-                border-top: 2px solid #e0e0e0;
-            }
-            
-            .btn-primary, .btn-secondary {
-                padding: 12px 30px;
-                border: none;
-                border-radius: 4px;
-                font-size: 16px;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s;
-            }
-            
-            .btn-primary {
-                background: #326891;
-                color: white;
-            }
-            
-            .btn-primary:hover {
-                background: #2a5675;
-                transform: translateY(-1px);
-                box-shadow: 0 4px 8px rgba(50, 104, 145, 0.3);
-            }
-            
-            .btn-secondary {
-                background: #e0e0e0;
-                color: #333;
-            }
-            
-            .btn-secondary:hover {
-                background: #d0d0d0;
-            }
+            .close-preview:hover { color: #121212; }
+            .resume-preview-content { flex: 1; overflow-y: auto; padding: 30px; background: #f9f9f9; }
+            .preview-section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+            .preview-header { background: #326891; color: white; text-align: center; }
+            .preview-header h1 { margin: 0 0 5px 0; font-size: 32px; }
+            .preview-title { font-size: 18px; margin: 0 0 15px 0; opacity: 0.95; }
+            .preview-contact { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; font-size: 14px; }
+            .preview-contact a { color: white; text-decoration: underline; }
+            .preview-heading { color: #326891; font-size: 18px; font-weight: bold; margin: 0 0 15px 0; padding-bottom: 8px; border-bottom: 2px solid #326891; }
+            .preview-section p { margin: 0 0 10px 0; line-height: 1.6; color: #333; }
+            .preview-meta, .preview-list { list-style: none; padding: 0; margin: 0; }
+            .preview-meta li, .preview-list li { margin-bottom: 8px; color: #333; }
+            .preview-skill { margin-bottom: 15px; }
+            .preview-skill strong { color: #326891; display: block; margin-bottom: 5px; }
+            .preview-skill p { color: #666; font-size: 14px; margin: 0; }
+            .preview-job { margin-bottom: 20px; }
+            .preview-job:last-child { margin-bottom: 0; }
+            .preview-job-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+            .preview-job-header strong { font-size: 16px; color: #121212; display: block; }
+            .preview-company { color: #326891; margin: 3px 0 0 0; font-size: 14px; }
+            .preview-period { color: #666; font-size: 14px; font-style: italic; white-space: nowrap; }
+            .preview-achievements { list-style: none; padding: 0; margin: 0; }
+            .preview-achievements li { position: relative; padding-left: 20px; margin-bottom: 6px; color: #333; font-size: 14px; line-height: 1.5; }
+            .preview-achievements li:before { content: "•"; position: absolute; left: 0; color: #326891; font-weight: bold; }
+            .preview-project { margin-bottom: 20px; }
+            .preview-project:last-child { margin-bottom: 0; }
+            .preview-project-header { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; }
+            .preview-project-header strong { color: #121212; }
+            .preview-subtitle { color: #666; font-style: italic; font-size: 14px; }
+            .preview-project-description { font-size: 14px; margin-bottom: 10px; color: #333; line-height: 1.6; }
+            .preview-tags { color: #666; font-size: 14px; margin-top: 8px; }
+            .preview-edu { margin-bottom: 20px; }
+            .preview-edu:last-child { margin-bottom: 0; }
+            .preview-edu-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+            .preview-institution { color: #326891; margin: 3px 0; font-size: 14px; }
+            .preview-honors { color: #666; font-style: italic; font-size: 14px; margin: 3px 0 0 0; }
+            .preview-coursework { color: #666; font-size: 14px; margin-top: 8px; }
+            .preview-list li { position: relative; padding-left: 20px; margin-bottom: 6px; font-size: 14px; }
+            .preview-list li:before { content: "•"; position: absolute; left: 0; color: #326891; font-weight: bold; }
+            .preview-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+            @media (max-width: 768px) { .preview-two-col { grid-template-columns: 1fr; } }
+            .resume-preview-footer { display: flex; justify-content: flex-end; gap: 15px; padding: 20px 30px; border-top: 2px solid #e0e0e0; }
+            .btn-primary, .btn-secondary { padding: 12px 30px; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+            .btn-primary { background: #326891; color: white; }
+            .btn-primary:hover { background: #2a5675; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(50, 104, 145, 0.3); }
+            .btn-secondary { background: #e0e0e0; color: #333; }
+            .btn-secondary:hover { background: #d0d0d0; }
         `;
         document.head.appendChild(styles);
     }
-    
-    // Store content data for download
-    window.resumeContentData = contentData;
+};
+
+// Show preview modal
+function showPreviewModal(contentData) {
+    resumePreview.show(contentData);
 }
 
 // Close preview modal
@@ -565,459 +333,312 @@ async function downloadResumeFromPreview() {
 window.closePreviewModal = closePreviewModal;
 window.downloadResumeFromPreview = downloadResumeFromPreview;
 
+// PDF Theme for easy customization
+const pdfTheme = {
+    colors: {
+        primary: [50, 104, 145], // #326891
+        dark: [18, 18, 18],
+        lightGray: [102, 102, 102],
+        white: [255, 255, 255]
+    },
+    fonts: {
+        header: {
+            family: 'helvetica',
+            style: 'bold',
+            size: 28
+        },
+        title: {
+            family: 'helvetica',
+            style: 'normal',
+            size: 14
+        },
+        contact: {
+            family: 'helvetica',
+            style: 'normal',
+            size: 9
+        },
+        h1: {
+            family: 'helvetica',
+            style: 'bold',
+            size: 14
+        },
+        h2: {
+            family: 'helvetica',
+            style: 'bold',
+            size: 11
+        },
+        body: {
+            family: 'helvetica',
+            style: 'normal',
+            size: 10
+        },
+        bodyBold: {
+            family: 'helvetica',
+            style: 'bold',
+            size: 10
+        },
+        small: {
+            family: 'helvetica',
+            style: 'normal',
+            size: 9
+        },
+        smallBold: {
+            family: 'helvetica',
+            style: 'bold',
+            size: 9
+        },
+        extraSmall: { // New font definition
+            family: 'helvetica',
+            style: 'normal',
+            size: 8
+        },
+        italic: {
+            family: 'helvetica',
+            style: 'italic',
+            size: 9
+        }
+    },
+    layout: {
+        margin: 20,
+        lineHeight: 5
+    }
+};
+
 // Generate PDF Resume
 async function generateResumePDF(contentData) {
     try {
-        // Show loading notification
         showNotification('Generating your resume...', 'info');
         
         const jsPDF = await loadJsPDF();
         const doc = new jsPDF();
         
         const { personal, hero, about, projects, resume } = contentData;
+        const { colors, fonts, layout } = pdfTheme;
         
-        // Page dimensions and margins
         const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-        const margin = 20;
-        const contentWidth = pageWidth - (margin * 2);
-        let yPosition = margin;
-        
-        // Helper function to add new page if needed
-        function checkPageBreak(requiredSpace = 20) {
-            if (yPosition + requiredSpace > pageHeight - margin) {
+        const contentWidth = pageWidth - (layout.margin * 2);
+        let yPosition = layout.margin;
+
+        // Helper to check for page breaks
+        const checkPageBreak = (requiredSpace = 20) => {
+            if (yPosition + requiredSpace > doc.internal.pageSize.getHeight() - layout.margin) {
                 doc.addPage();
-                yPosition = margin;
+                yPosition = layout.margin;
                 return true;
             }
             return false;
-        }
+        };
         
-        // Helper function to wrap text
-        function addWrappedText(text, x, y, maxWidth, lineHeight = 7) {
+        // Helper to add wrapped text
+        const addWrappedText = (text, options) => {
+            const { x, y, maxWidth, font, color, lineHeight } = {
+                x: layout.margin,
+                y: yPosition,
+                maxWidth: contentWidth,
+                font: fonts.body,
+                color: colors.dark,
+                lineHeight: layout.lineHeight,
+                ...options
+            };
+            doc.setFont(font.family, font.style);
+            doc.setFontSize(font.size);
+            doc.setTextColor(...color);
+
             const lines = doc.splitTextToSize(text, maxWidth);
             lines.forEach((line, index) => {
                 checkPageBreak();
                 doc.text(line, x, y + (index * lineHeight));
             });
             return lines.length * lineHeight;
-        }
-        
-        // Colors
-        const primaryColor = [50, 104, 145]; // #326891
-        const darkColor = [18, 18, 18];
-        const lightGray = [102, 102, 102];
-        
+        };
+
+        // Helper to add a section heading
+        const addSection = (title) => {
+            checkPageBreak(20);
+            yPosition += 10;
+            doc.setFont(fonts.h1.family, fonts.h1.style);
+            doc.setFontSize(fonts.h1.size);
+            doc.setTextColor(...colors.dark);
+            doc.text(title, layout.margin, yPosition);
+            
+            yPosition += 2;
+            doc.setDrawColor(...colors.primary);
+            doc.setLineWidth(0.5);
+            doc.line(layout.margin, yPosition, pageWidth - layout.margin, yPosition);
+            yPosition += 8;
+        };
+
         // === HEADER SECTION ===
-        doc.setFillColor(...primaryColor);
+        doc.setFillColor(...colors.primary);
         doc.rect(0, 0, pageWidth, 45, 'F');
+        doc.setTextColor(...colors.white);
         
-        // Name
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(28);
-        doc.setFont('helvetica', 'bold');
-        doc.text(personal.name, margin, yPosition + 15);
+        doc.setFont(fonts.header.family, fonts.header.style);
+        doc.setFontSize(fonts.header.size);
+        doc.text(personal.name, layout.margin, yPosition + 15);
         
-        // Title
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'normal');
-        doc.text(personal.title, margin, yPosition + 25);
+        doc.setFont(fonts.title.family, fonts.title.style);
+        doc.setFontSize(fonts.title.size);
+        doc.text(personal.title, layout.margin, yPosition + 25);
         
-        // Contact Info
-        doc.setFontSize(9);
-        doc.text(personal.email, margin, yPosition + 35);
-        doc.text(personal.githubUrl, margin + 80, yPosition + 35);
+        doc.setFont(fonts.contact.family, fonts.contact.style);
+        doc.setFontSize(fonts.contact.size);
+        doc.text(personal.email, layout.margin, yPosition + 35);
+        doc.text(personal.githubUrl, layout.margin + 80, yPosition + 35);
         
         yPosition = 55;
-        
+
         // === PROFESSIONAL SUMMARY ===
-        doc.setTextColor(...darkColor);
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.text('PROFESSIONAL SUMMARY', margin, yPosition);
-        
-        // Draw line under heading
-        yPosition += 2;
-        doc.setDrawColor(...primaryColor);
-        doc.setLineWidth(0.5);
-        doc.line(margin, yPosition, pageWidth - margin, yPosition);
-        
-        yPosition += 8;
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(...darkColor);
-        
-        // Remove HTML tags from lede
-        const cleanLede = (resume && resume.objective ? resume.objective : hero.lede)
-            .replace(/<strong>/g, '')
-            .replace(/<\/strong>/g, '')
-            .replace(/<em>/g, '')
-            .replace(/<\/em>/g, '');
-        
-        const ledeHeight = addWrappedText(cleanLede, margin, yPosition, contentWidth);
-        yPosition += ledeHeight + 10;
-        
+        addSection('PROFESSIONAL SUMMARY');
+        const summary = (resume?.objective || hero.lede).replace(/<[^>]+>/g, '');
+        const summaryHeight = addWrappedText(summary, { y: yPosition });
+        yPosition += summaryHeight;
+
         // === CORE COMPETENCIES ===
-        checkPageBreak(30);
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.text('CORE COMPETENCIES', margin, yPosition);
-        
-        yPosition += 2;
-        doc.setDrawColor(...primaryColor);
-        doc.line(margin, yPosition, pageWidth - margin, yPosition);
-        
-        yPosition += 8;
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
-        
-        // Display hero meta items
+        addSection('CORE COMPETENCIES');
         hero.meta.forEach(item => {
-            doc.setFont('helvetica', 'bold');
-            doc.text(`${item.label}:`, margin, yPosition);
-            doc.setFont('helvetica', 'normal');
-            doc.text(item.value, margin + 35, yPosition);
+            checkPageBreak(6);
+            addWrappedText(`${item.label}:`, { y: yPosition, font: fonts.h2, color: colors.dark });
+            addWrappedText(item.value, { x: layout.margin + 35, y: yPosition });
             yPosition += 6;
         });
-        
-        yPosition += 5;
-        
+
         // === TECHNICAL SKILLS ===
-        checkPageBreak(30);
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.text('TECHNICAL SKILLS', margin, yPosition);
-        
-        yPosition += 2;
-        doc.setDrawColor(...primaryColor);
-        doc.line(margin, yPosition, pageWidth - margin, yPosition);
-        
-        yPosition += 8;
-        doc.setFontSize(10);
-        
+        addSection('TECHNICAL SKILLS');
         about.skills.forEach(skill => {
             checkPageBreak(15);
-            
-            // Skill title
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(...primaryColor);
-            doc.text(`• ${skill.title}`, margin, yPosition);
-            
+            addWrappedText(`• ${skill.title}`, { y: yPosition, font: fonts.h2, color: colors.primary });
             yPosition += 5;
-            
-            // Skill description
-            doc.setFont('helvetica', 'normal');
-            doc.setTextColor(...lightGray);
-            const skillHeight = addWrappedText(skill.description, margin + 5, yPosition, contentWidth - 5, 5);
+            const skillHeight = addWrappedText(skill.description, { x: layout.margin + 5, y: yPosition, color: colors.lightGray, font: fonts.small });
             yPosition += skillHeight + 3;
         });
         
-        yPosition += 5;
-        
         // === PROFESSIONAL EXPERIENCE ===
-        if (resume && resume.experience) {
-            checkPageBreak(30);
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(...darkColor);
-            doc.text('PROFESSIONAL EXPERIENCE', margin, yPosition);
-            
-            yPosition += 2;
-            doc.setDrawColor(...primaryColor);
-            doc.line(margin, yPosition, pageWidth - margin, yPosition);
-            
-            yPosition += 8;
-            
-            resume.experience.forEach((job, index) => {
+        if (resume?.experience) {
+            addSection('PROFESSIONAL EXPERIENCE');
+            resume.experience.forEach(job => {
                 checkPageBreak(30);
-                
-                // Job title and company
-                doc.setFontSize(11);
-                doc.setFont('helvetica', 'bold');
-                doc.setTextColor(...darkColor);
-                doc.text(job.title, margin, yPosition);
-                
-                doc.setFont('helvetica', 'normal');
-                doc.setFontSize(10);
-                doc.setTextColor(...primaryColor);
-                doc.text(`${job.company} | ${job.location}`, margin, yPosition + 5);
-                
-                doc.setFontSize(9);
-                doc.setFont('helvetica', 'italic');
-                doc.setTextColor(...lightGray);
-                doc.text(job.period, pageWidth - margin - 40, yPosition);
-                
+                addWrappedText(job.title, { y: yPosition, font: fonts.h2 });
+                addWrappedText(`${job.company} | ${job.location}`, { y: yPosition + 5, font: fonts.body, color: colors.primary });
+                addWrappedText(job.period, { x: pageWidth - layout.margin - 40, y: yPosition, font: fonts.italic, color: colors.lightGray });
                 yPosition += 10;
-                
-                // Achievements
-                doc.setFontSize(9);
-                doc.setFont('helvetica', 'normal');
-                doc.setTextColor(...darkColor);
-                
+
                 job.achievements.forEach(achievement => {
                     checkPageBreak(10);
-                    const bulletHeight = addWrappedText(`• ${achievement}`, margin + 5, yPosition, contentWidth - 5, 5);
+                    const bulletHeight = addWrappedText(`• ${achievement}`, { x: layout.margin + 5, y: yPosition, font: fonts.small });
                     yPosition += bulletHeight + 2;
                 });
-                
                 yPosition += 5;
             });
-            
-            yPosition += 3;
         }
         
         // === KEY PROJECTS ===
-        checkPageBreak(30);
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...darkColor);
-        doc.text('KEY PROJECTS', margin, yPosition);
-        yPosition += 2;
-        doc.setDrawColor(...primaryColor);
-        doc.line(margin, yPosition, pageWidth - margin, yPosition);
-        yPosition += 8;
-        doc.setFontSize(10);
-        projects.items.forEach((project, index) => {
+        addSection('KEY PROJECTS');
+        projects.items.forEach(project => {
             checkPageBreak(18);
-            // Title and subtitle on one line
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(...darkColor);
-            let titleText = project.title;
-            doc.text(titleText, margin, yPosition);
+            addWrappedText(project.title, { y: yPosition, font: fonts.smallBold });
             if (project.subtitle) {
-                doc.setFont('helvetica', 'italic');
-                doc.setFontSize(9);
-                doc.setTextColor(...lightGray);
-                doc.text(project.subtitle, margin + 60, yPosition);
+                addWrappedText(project.subtitle, { x: layout.margin + 60, y: yPosition, font: fonts.italic, color: colors.lightGray });
             }
-            yPosition += 5;
-            // Description as bullet
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-            doc.setTextColor(...darkColor);
-            const descHeight = addWrappedText(`• ${project.description}`, margin + 5, yPosition, contentWidth - 10, 5);
-            yPosition += descHeight;
-            // Technologies as muted line
-            if (project.tags && project.tags.length > 0) {
-                doc.setFont('helvetica', 'italic');
-                doc.setFontSize(8);
-                doc.setTextColor(...lightGray);
-                doc.text(project.tags.join(', '), margin + 10, yPosition);
-                yPosition += 6;
+            yPosition += 4; // Reduced from 5
+            const descHeight = addWrappedText(`• ${project.description}`, { x: layout.margin + 5, y: yPosition, font: fonts.extraSmall });
+            yPosition += descHeight + 1; // Reduced from +3
+
+            if (project.tags?.length > 0) {
+                addWrappedText(project.tags.join(', '), { x: layout.margin + 10, y: yPosition, font: fonts.extraSmall, color: colors.lightGray });
+                yPosition += 5; // Reduced from 6
             } else {
-                yPosition += 2;
+                yPosition += 1; // Reduced from 2
             }
         });
-        
+
         // === EDUCATION ===
-        if (resume && resume.education) {
-            yPosition += 5;
-            checkPageBreak(30);
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(...darkColor);
-            doc.text('EDUCATION', margin, yPosition);
-            
-            yPosition += 2;
-            doc.setDrawColor(...primaryColor);
-            doc.line(margin, yPosition, pageWidth - margin, yPosition);
-            
-            yPosition += 8;
-            
+        if (resume?.education) {
+            addSection('EDUCATION');
             resume.education.forEach(edu => {
                 checkPageBreak(20);
-                
-                // Degree
-                doc.setFontSize(11);
-                doc.setFont('helvetica', 'bold');
-                doc.setTextColor(...darkColor);
-                doc.text(edu.degree, margin, yPosition);
-                
-                doc.setFontSize(9);
-                doc.setFont('helvetica', 'italic');
-                doc.setTextColor(...lightGray);
-                doc.text(edu.period, pageWidth - margin - 30, yPosition);
-                
+                addWrappedText(edu.degree, { y: yPosition, font: fonts.h2 });
+                addWrappedText(edu.period, { x: pageWidth - layout.margin - 30, y: yPosition, font: fonts.italic, color: colors.lightGray });
                 yPosition += 5;
-                
-                // Institution
-                doc.setFont('helvetica', 'normal');
-                doc.setFontSize(10);
-                doc.setTextColor(...primaryColor);
-                doc.text(`${edu.institution}, ${edu.location}`, margin, yPosition);
-                
+                addWrappedText(`${edu.institution}, ${edu.location}`, { y: yPosition, color: colors.primary });
                 yPosition += 5;
-                
-                // Honors
+
                 if (edu.honors) {
-                    doc.setFont('helvetica', 'italic');
-                    doc.setFontSize(9);
-                    doc.setTextColor(...lightGray);
-                    doc.text(edu.honors, margin, yPosition);
+                    addWrappedText(edu.honors, { y: yPosition, font: fonts.italic, color: colors.lightGray });
                     yPosition += 5;
                 }
-                
-                // Relevant coursework
-                if (edu.relevant && edu.relevant.length > 0) {
-                    doc.setFont('helvetica', 'bold');
-                    doc.setFontSize(9);
-                    doc.setTextColor(...darkColor);
-                    doc.text('Relevant Coursework:', margin, yPosition);
+                if (edu.relevant?.length > 0) {
+                    addWrappedText('Relevant Coursework:', { y: yPosition, font: fonts.h2 });
                     yPosition += 4;
-                    
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(...lightGray);
-                    const courseHeight = addWrappedText(edu.relevant.join(', '), margin + 5, yPosition, contentWidth - 5, 4);
+                    const courseHeight = addWrappedText(edu.relevant.join(', '), { x: layout.margin + 5, y: yPosition, font: fonts.small, color: colors.lightGray });
                     yPosition += courseHeight + 5;
                 }
-                
                 yPosition += 3;
             });
         }
-        
-        // === CERTIFICATIONS ===
-        if (resume && resume.certifications && resume.certifications.length > 0) {
-            yPosition += 5;
-            checkPageBreak(30);
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(...darkColor);
-            doc.text('CERTIFICATIONS', margin, yPosition);
-            
-            yPosition += 2;
-            doc.setDrawColor(...primaryColor);
-            doc.line(margin, yPosition, pageWidth - margin, yPosition);
-            
-            yPosition += 8;
-            doc.setFontSize(10);
-            
-            resume.certifications.forEach(cert => {
-                checkPageBreak(8);
+
+        // Helper for creating multi-column layouts
+        const createMultiColumn = (columns, y) => {
+            const numColumns = columns.length;
+            const columnWidth = (contentWidth - (numColumns - 1) * 10) / numColumns;
+            let maxY = y;
+
+            columns.forEach((column, index) => {
+                let currentY = y;
+                const x = layout.margin + index * (columnWidth + 10);
                 
-                doc.setFont('helvetica', 'bold');
-                doc.setTextColor(...darkColor);
-                doc.text(`• ${cert.name}`, margin, yPosition);
-                
-                doc.setFont('helvetica', 'normal');
-                doc.setTextColor(...lightGray);
-                doc.text(`- ${cert.issuer} (${cert.date})`, margin + 5, yPosition + 4);
-                
-                yPosition += 9;
+                addWrappedText(column.title, { x, y: currentY, font: fonts.h2, color: colors.dark });
+                currentY += 2;
+                doc.setDrawColor(...colors.primary);
+                doc.line(x, currentY, x + columnWidth, currentY);
+                currentY += 6;
+
+                column.items.forEach(item => {
+                    checkPageBreak(6);
+                    const itemHeight = addWrappedText(item, { x: x, y: currentY, maxWidth: columnWidth, font: fonts.small });
+                    currentY += itemHeight + 2;
+                });
+
+                if (currentY > maxY) {
+                    maxY = currentY;
+                }
             });
-            
-            yPosition += 3;
-        }
-        
-        // === ACHIEVEMENTS ===
-        if (resume && resume.achievements && resume.achievements.length > 0) {
-            yPosition += 5;
-            checkPageBreak(30);
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(...darkColor);
-            doc.text('KEY ACHIEVEMENTS', margin, yPosition);
-            
-            yPosition += 2;
-            doc.setDrawColor(...primaryColor);
-            doc.line(margin, yPosition, pageWidth - margin, yPosition);
-            
-            yPosition += 8;
-            doc.setFontSize(9);
-            doc.setFont('helvetica', 'normal');
-            doc.setTextColor(...darkColor);
-            
-            resume.achievements.forEach(achievement => {
-                checkPageBreak(8);
-                const achHeight = addWrappedText(`• ${achievement}`, margin, yPosition, contentWidth, 5);
-                yPosition += achHeight + 2;
-            });
-            
-            yPosition += 3;
-        }
-        
+
+            return maxY;
+        };
+
         // === LANGUAGES & INTERESTS ===
-        if ((resume && resume.languages) || (resume && resume.interests)) {
-            yPosition += 5;
-            checkPageBreak(25);
-            
-            const halfWidth = (contentWidth / 2) - 5;
-            let leftY = yPosition;
-            let rightY = yPosition;
-            
-            // Languages
-            if (resume.languages && resume.languages.length > 0) {
-                doc.setFontSize(12);
-                doc.setFont('helvetica', 'bold');
-                doc.setTextColor(...darkColor);
-                doc.text('LANGUAGES', margin, leftY);
-                
-                leftY += 2;
-                doc.setDrawColor(...primaryColor);
-                doc.line(margin, leftY, margin + halfWidth, leftY);
-                
-                leftY += 6;
-                doc.setFontSize(9);
-                doc.setFont('helvetica', 'normal');
-                
-                resume.languages.forEach(lang => {
-                    checkPageBreak(6);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(...darkColor);
-                    doc.text(`• ${lang.language}:`, margin, leftY);
-                    
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(...lightGray);
-                    doc.text(lang.proficiency, margin + 25, leftY);
-                    
-                    leftY += 5;
+        if (resume?.languages || resume?.interests) {
+            addSection('LANGUAGES & INTERESTS');
+            const columns = [];
+            if (resume.languages?.length > 0) {
+                columns.push({
+                    title: 'LANGUAGES',
+                    items: resume.languages.map(lang => `• ${lang.language}: ${lang.proficiency}`)
                 });
             }
-            
-            // Interests
-            if (resume.interests && resume.interests.length > 0) {
-                doc.setFontSize(12);
-                doc.setFont('helvetica', 'bold');
-                doc.setTextColor(...darkColor);
-                doc.text('INTERESTS', margin + halfWidth + 10, rightY);
-                
-                rightY += 2;
-                doc.setDrawColor(...primaryColor);
-                doc.line(margin + halfWidth + 10, rightY, pageWidth - margin, rightY);
-                
-                rightY += 6;
-                doc.setFontSize(9);
-                doc.setFont('helvetica', 'normal');
-                doc.setTextColor(...darkColor);
-                
-                resume.interests.forEach(interest => {
-                    checkPageBreak(6);
-                    doc.text(`• ${interest}`, margin + halfWidth + 10, rightY);
-                    rightY += 5;
+            if (resume.interests?.length > 0) {
+                columns.push({
+                    title: 'INTERESTS',
+                    items: resume.interests.map(interest => `• ${interest}`)
                 });
             }
-            
-            yPosition = Math.max(leftY, rightY) + 5;
+            yPosition = createMultiColumn(columns, yPosition);
         }
-        
+
         // === FOOTER ===
-        const footerY = pageHeight - 15;
-        doc.setFontSize(8);
-        doc.setTextColor(...lightGray);
-        doc.setFont('helvetica', 'italic');
-        const currentDate = new Date().toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
+        const footerY = doc.internal.pageSize.getHeight() - 15;
+        doc.setFont(fonts.italic.family, fonts.italic.style);
+        doc.setFontSize(fonts.italic.size);
+        doc.setTextColor(...colors.lightGray);
+        const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         doc.text(`Generated on ${currentDate}`, pageWidth / 2, footerY, { align: 'center' });
         
         // Add page numbers
         const pageCount = doc.internal.getNumberOfPages();
         for (let i = 1; i <= pageCount; i++) {
             doc.setPage(i);
-            doc.setFontSize(8);
-            doc.setTextColor(...lightGray);
-            doc.text(`Page ${i} of ${pageCount}`, pageWidth - margin, footerY, { align: 'right' });
+            doc.text(`Page ${i} of ${pageCount}`, pageWidth - layout.margin, footerY, { align: 'right' });
         }
         
         // Save the PDF
@@ -1031,6 +652,7 @@ async function generateResumePDF(contentData) {
         showNotification('Error generating resume. Please try again.', 'error');
     }
 }
+
 
 // Initialize resume generator
 function initResumeGenerator() {

@@ -127,9 +127,9 @@ function populateAbout() {
     // Skills
     const skillsGrid = document.querySelector('.skills-grid');
     if (skillsGrid && about.skills) {
-        skillsGrid.innerHTML = about.skills.map(skill => `
+        skillsGrid.innerHTML = about.skills.map((skill, index) => `
             <div class="skill-card">
-                <div class="skill-number">${skill.number}</div>
+                <div class="skill-number">${String(index + 1).padStart(2, '0')}</div>
                 <h4>${skill.title}</h4>
                 <p>${skill.description}</p>
             </div>
@@ -169,7 +169,7 @@ function populateProjects() {
                         ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                     </div>
                     
-                    ${project.link ? `
+                    ${project.link && project.link.url ? `
                         <div class="project-link">
                             <a href="${project.link.url}" target="_blank" class="link-with-arrow">
                                 ${project.link.text}
@@ -197,9 +197,9 @@ function populateContact() {
     // Contact methods
     const methodsContainer = document.querySelector('.contact-methods');
     if (methodsContainer && contact.methods) {
-        methodsContainer.innerHTML = contact.methods.map(method => `
+        methodsContainer.innerHTML = contact.methods.map((method, index) => `
             <a href="${method.link}" class="contact-card" ${method.link.startsWith('http') ? 'target="_blank"' : ''}>
-                <div class="contact-number">${method.number}</div>
+                <div class="contact-number">${String(index + 1).padStart(2, '0')}</div>
                 <h3>${method.title}</h3>
                 <p>${method.value}</p>
                 <span class="contact-arrow">→</span>

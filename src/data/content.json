@@ -42,32 +42,26 @@
     "quote": "Building software isn't just about writing code—it's about understanding problems deeply and crafting solutions that stand the test of time.",
     "skills": [
       {
-        "number": "01",
         "title": "Frontend Development",
         "description": "React.js, JavaScript, TypeScript, HTML5/CSS3, Tailwind CSS. Building responsive, modern user interfaces with focus on performance and user experience."
       },
       {
-        "number": "02",
         "title": "Backend Development",
         "description": "Node.js, Python, Supabase (PostgreSQL), Firebase, Neon.tech. Creating robust APIs and scalable backend systems with secure authentication."
       },
       {
-        "number": "03",
         "title": "Security & Cryptography",
         "description": "Cryptographic signatures, license key systems, public key verification. Implementing secure authentication and licensing solutions."
       },
       {
-        "number": "04",
         "title": "SaaS Development",
         "description": "Product development, Stripe integration, user authentication, analytics dashboards. Building complete software-as-a-service platforms from scratch."
       },
       {
-        "number": "05",
         "title": "Desktop Applications",
         "description": "PyQt development for creating cross-platform desktop applications. Built 5+ custom tools improving client productivity by up to 30%."
       },
       {
-        "number": "06",
         "title": "SEO & Analytics",
         "description": "Technical SEO, metadata structuring, keyword optimization, Google Search Console. Enhancing web visibility and search performance."
       }
@@ -80,14 +74,6 @@
     "items": [
       {
         "featured": true,
-        "title": "TidyList",
-        "subtitle": "Email Verification SaaS Platform",
-        "description": "Email verification SaaS platform processing thousands of emails daily with 98% accuracy. Complete full-stack solution with Stripe payments and RESTful API.",
-        "tags": ["Node.js", "React", "Supabase", "Stripe", "PostgreSQL"],
-        "link": null
-      },
-      {
-        "featured": true,
         "title": "Keymint.dev",
         "subtitle": "Software License Management System",
         "description": "Developer-first licensing platform with cryptographic signature validation. Supports offline/online modes, serving 100+ active users with enterprise-grade security.",
@@ -95,6 +81,17 @@
         "link": {
           "url": "https://keymint.dev",
           "text": "Visit Keymint.dev"
+        }
+      },
+      {
+        "featured": true,
+        "title": "TidyList",
+        "subtitle": "Email Verification SaaS Platform",
+        "description": "Email verification SaaS platform processing thousands of emails daily with 98% accuracy. Complete full-stack solution with Stripe payments and RESTful API.",
+        "tags": ["Node.js", "React", "Supabase", "Stripe", "PostgreSQL"],
+        "link": {
+          "url": null,
+          "text": null
         }
       },
       {
@@ -116,13 +113,11 @@
     "intro": "I'm always open to discussing new projects, collaboration opportunities, or simply connecting with fellow developers and entrepreneurs. Whether you have a product idea, need technical consulting, or want to explore working together, I'd love to hear from you.",
     "methods": [
       {
-        "number": "01",
         "title": "Email",
         "value": "atsikaclifford414@gmail.com",
         "link": "mailto:atsikaclifford414@gmail.com"
       },
       {
-        "number": "02",
         "title": "GitHub",
         "value": "github.com/catsika",
         "link": "https://github.com/catsika"
@@ -179,7 +174,7 @@
         "institution": "Ghana Communication Technology University",
         "location": "Accra, Ghana",
         "period": "2021 - 2025",
-        "honors": null,
+        "honors": [],
         "relevant": [
           "Software Engineering",
           "Web Development",

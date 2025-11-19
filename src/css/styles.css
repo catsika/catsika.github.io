@@ -798,10 +798,7 @@ section:last-of-type {
 }
 
 .project-card.featured:hover::before {
-    opacity: 0.1;
-}
-
-.project-card:last-child {
+    opacity: 0;
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
@@ -846,6 +843,10 @@ section:last-of-type {
 
 .project-card:hover .project-title {
     color: var(--color-accent);
+}
+
+.project-card.featured:hover .project-title {
+    color: var(--color-text);
 }
 
 .project-subtitle {
@@ -1422,7 +1423,7 @@ body.loaded::before {
 }
 
 .project-card.featured:hover::before {
-    opacity: 0.1;
+    opacity: 0;
 }
 
 /* Skill card number animation */

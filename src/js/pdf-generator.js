@@ -91,6 +91,24 @@ async function generateResumePDF(contentData) {
             y += 5; // more space after line
         };
 
+        // Helper: check if enough space for a block, else page break before block
+        const ensureBlockFits = (minHeight) => {
+            if (y + minHeight > pageHeight - layout.margin) {
+                doc.addPage();
+                y = layout.margin;
+            }
+        };
+
+        // Helper: estimate height for a job block (title, company, achievements)
+        const estimateJobBlockHeight = (job) => {
+            let h = 0;
+            h += layout.lineHeight * 1.5; // title/period
+            h += layout.lineHeight * 1.7; // company/location
+            h += (job.achievements.length) * (layout.lineHeight * 1.1 + 2.5); // each achievement
+            h += 10; // bottom margin between jobs
+            return h;
+        };
+
         // --- PDF Structure ---
 
         // 1. Header Section - Centered
@@ -132,7 +150,7 @@ async function generateResumePDF(contentData) {
         if (projects.items && projects.items.length > 0) {
             addSection('Projects');
             projects.items.forEach((project, index) => {
-                checkPageBreak(30);
+                ensureBlockFits(25); // ensure at least 2-3 lines fit
                 // Project title in uppercase
                 doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
                 doc.setFontSize(fonts.jobTitle.size);
@@ -176,31 +194,27 @@ async function generateResumePDF(contentData) {
             });
             y += layout.sectionSpacing + 4;
         }
-        
         // 4. Professional Experience
         addSection('Professional Experience');
         resume.experience.forEach((job, index) => {
-            checkPageBreak(30);
-            
+            const jobBlockHeight = estimateJobBlockHeight(job);
+            ensureBlockFits(jobBlockHeight);
             // Job title and period on same line
             doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
             doc.setFontSize(fonts.jobTitle.size);
             doc.setTextColor(colors.primary);
             doc.text(job.title.toUpperCase(), layout.margin, y);
-
             doc.setFont(fonts.small.family, fonts.small.style);
             doc.setFontSize(fonts.small.size);
             doc.setTextColor(colors.secondary);
             doc.text(job.period, pageWidth - layout.margin, y, { align: 'right' });
             y += layout.lineHeight * 1.5;
-
             // Company and location
             doc.setFont(fonts.body.family, fonts.body.style);
             doc.setFontSize(fonts.body.size);
             doc.setTextColor(colors.secondary);
             doc.text(`${job.company}, ${job.location}`, layout.margin, y);
             y += layout.lineHeight * 1.7;
-            
             // Achievements
             job.achievements.forEach(achievement => {
                 checkPageBreak(10);
@@ -210,7 +224,6 @@ async function generateResumePDF(contentData) {
                 doc.setFontSize(fonts.body.size);
                 doc.setTextColor(colors.primary);
                 doc.text(bullet, layout.margin, y);
-                
                 const textHeight = addWrappedText(achievement, {
                     x: layout.margin + bulletWidth,
                     font: fonts.body,
@@ -220,17 +233,15 @@ async function generateResumePDF(contentData) {
                 });
                 y += textHeight + 2.5;
             });
-            
             if (index < resume.experience.length - 1) {
                 y += 10;
             }
         });
         y += layout.sectionSpacing + 4;
-
         // 5. Education Section
         addSection('Education');
         resume.education.forEach((edu, index) => {
-            checkPageBreak(18);
+            ensureBlockFits(18);
             
             // Institution name and period
             doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
@@ -256,15 +267,11 @@ async function generateResumePDF(contentData) {
             }
         });
         y += layout.sectionSpacing + 4;
-
         // 6. Skills and Interests Section
         addSection('Skills and Interests');
-        // Group skills by category if available, otherwise list titles
         if (about.skills && about.skills.length > 0) {
-            // Check if skills have a 'category' property
             const hasCategory = about.skills.some(skill => skill.category);
             if (hasCategory) {
-                // Group by category
                 const grouped = {};
                 about.skills.forEach(skill => {
                     const cat = skill.category || 'Other';
@@ -272,14 +279,14 @@ async function generateResumePDF(contentData) {
                     grouped[cat].push(skill.title);
                 });
                 Object.entries(grouped).forEach(([cat, skills]) => {
-                    checkPageBreak(12);
+                    ensureBlockFits(14 + skills.length * 7);
                     doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
                     doc.setFontSize(fonts.jobTitle.size);
                     doc.setTextColor(colors.primary);
                     doc.text(cat, layout.margin, y);
                     y += layout.lineHeight * 1.2;
                     skills.forEach(skillTitle => {
-                        checkPageBreak(8);
+                        ensureBlockFits(8);
                         const bullet = '•';
                         const bulletWidth = 4;
                         doc.setFont(fonts.body.family, fonts.body.style);
@@ -292,9 +299,9 @@ async function generateResumePDF(contentData) {
                     y += 4;
                 });
             } else {
-                // No categories, just list all skill titles as bullets
+                ensureBlockFits(about.skills.length * 7);
                 about.skills.forEach(skill => {
-                    checkPageBreak(8);
+                    ensureBlockFits(8);
                     const bullet = '•';
                     const bulletWidth = 4;
                     doc.setFont(fonts.body.family, fonts.body.style);
@@ -307,12 +314,11 @@ async function generateResumePDF(contentData) {
             }
         }
         y += layout.sectionSpacing + 4;
-
         // 7. Reference Section (if applicable)
         if (resume.references && resume.references.length > 0) {
             addSection('Reference');
             resume.references.forEach(ref => {
-                checkPageBreak(16);
+                ensureBlockFits(16);
                 doc.setFont(fonts.jobTitle.family, fonts.jobTitle.style);
                 doc.setFontSize(fonts.jobTitle.size);
                 doc.setTextColor(colors.primary);

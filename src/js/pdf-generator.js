@@ -778,30 +778,35 @@ async function generateResumePDF(contentData) {
         yPosition += 8;
         doc.setFontSize(10);
         projects.items.forEach((project, index) => {
-            checkPageBreak(25);
-            // Project title
+            checkPageBreak(18);
+            // Title and subtitle on one line
             doc.setFont('helvetica', 'bold');
             doc.setTextColor(...darkColor);
-            doc.text(project.title, margin, yPosition);
-            // Project subtitle
-            doc.setFont('helvetica', 'italic');
-            doc.setFontSize(9);
-            doc.setTextColor(...lightGray);
-            doc.text(project.subtitle, margin + 60, yPosition);
+            let titleText = project.title;
+            doc.text(titleText, margin, yPosition);
+            if (project.subtitle) {
+                doc.setFont('helvetica', 'italic');
+                doc.setFontSize(9);
+                doc.setTextColor(...lightGray);
+                doc.text(project.subtitle, margin + 60, yPosition);
+            }
             yPosition += 5;
-            // Project description
+            // Description as bullet
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(9);
             doc.setTextColor(...darkColor);
-            const projectHeight = addWrappedText(project.description, margin + 5, yPosition, contentWidth - 5, 5);
-            yPosition += projectHeight + 3;
-            // Technologies
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(...lightGray);
-            doc.text('Technologies:', margin + 5, yPosition);
-            doc.setFont('helvetica', 'normal');
-            doc.text(project.tags.join(', '), margin + 35, yPosition);
-            yPosition += 8;
+            const descHeight = addWrappedText(`• ${project.description}`, margin + 5, yPosition, contentWidth - 10, 5);
+            yPosition += descHeight;
+            // Technologies as muted line
+            if (project.tags && project.tags.length > 0) {
+                doc.setFont('helvetica', 'italic');
+                doc.setFontSize(8);
+                doc.setTextColor(...lightGray);
+                doc.text(project.tags.join(', '), margin + 10, yPosition);
+                yPosition += 6;
+            } else {
+                yPosition += 2;
+            }
         });
         
         // === EDUCATION ===

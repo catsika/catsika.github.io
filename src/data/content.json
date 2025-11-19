@@ -40,32 +40,41 @@
       "As a freelance developer, I've delivered over 15 custom full-stack web applications and automation tools to a global clientele. I specialize in building robust backend systems, secure payment integrations, and high-performance frontend interfaces, always with a focus on clean code, scalability, and user experience."
     ],
     "quote": "Building software isn't just about writing code—it's about understanding problems deeply and crafting solutions that stand the test of time.",
-    "skills": [
-      {
-        "title": "Frontend Development",
-        "description": "Building responsive, high-performance user interfaces with React.js, TypeScript, and modern CSS frameworks. Focused on creating exceptional user experiences."
-      },
-      {
-        "title": "Backend Development",
-        "description": "Designing and building robust, scalable APIs and backend systems with Node.js and Python. Experienced with both SQL and NoSQL databases (PostgreSQL, Firebase)."
-      },
-      {
-        "title": "Security & Cryptography",
-        "description": "Implementing secure authentication and licensing solutions using cryptographic signatures and public key verification."
-      },
-      {
-        "title": "SaaS Development",
-        "description": "Leading end-to-end SaaS development, from product ideation and architecture to Stripe integration and analytics."
-      },
-      {
-        "title": "Desktop Applications",
-        "description": "Creating cross-platform desktop applications with PyQt that have improved client productivity by up to 30%."
-      },
-      {
-        "title": "SEO & Analytics",
-        "description": "Improving web visibility and search performance through technical SEO, structured data, and analytics."
-      }
-    ]
+   "skills": [
+  {
+    "title": "Frontend Development",
+    "description": "Experienced in building fast, responsive and accessible interfaces using React, Next.js, and TypeScript. Skilled with Tailwind CSS, component libraries, and modern UI patterns optimized for developer-facing tools."
+  },
+  {
+    "title": "Backend Development",
+    "description": "Designing scalable APIs and services with Node.js and Python, using PostgreSQL, Neon.tech, Supabase, and Firebase. Strong understanding of authentication, rate limiting, job queues, and cloud deployments on Vercel and serverless platforms."
+  },
+  {
+    "title": "Security & Cryptography",
+    "description": "Implementing secure authentication systems and offline licensing using Ed25519 signatures, JWT, public key verification, and cryptographic best practices. Experience building licensing flows similar to Keygen and RustDesk."
+  },
+  {
+    "title": "SaaS & Developer Tools",
+    "description": "Building complete SaaS platforms end-to-end — product architecture, dashboard UX, payment integration (Stripe), analytics (PostHog), user management, and automated workflows. Creator of Keymint.dev, a modern licensing platform."
+  },
+  {
+    "title": "Desktop Applications",
+    "description": "Developing cross-platform desktop software with PyQt and Python, including automation tools and productivity apps that improved client workflows by up to 30%."
+  },
+  {
+    "title": "Databases & Infrastructure",
+    "description": "Proficient with PostgreSQL, Neon.tech, Supabase, Upstash Redis, and Firebase. Understanding of distributed systems principles, caching, database design, and cloud deployments with Vercel and AWS-backed services."
+  },
+  {
+    "title": "Payments & Integrations",
+    "description": "Integrating secure and reliable payment systems using Stripe and CoinPayments. Experience with webhooks, subscription management, API-based billing, and customer dashboards."
+  },
+  {
+    "title": "SEO & Analytics",
+    "description": "Improving site visibility through technical SEO, metadata optimization, clean semantic HTML, structured data, and analytics-driven iteration using PostHog and Search Console."
+  }
+]
+
   },
   "projects": {
     "eyebrow": "Portfolio",

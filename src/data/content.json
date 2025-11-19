@@ -4,7 +4,7 @@
     "title": "Full-Stack Software Engineer",
     "tagline": "Building Production-Ready Software That Solves Real Problems",
     "email": "atsikaclifford414@gmail.com",
-    "phone": "+233244123456",
+    "phone": "",
     "location": "Accra, Ghana",
     "github": "catsika",
     "githubUrl": "https://github.com/catsika",
@@ -121,7 +121,7 @@
         "title": "Freelance Full-Stack Developer",
         "company": "Self-Employed",
         "location": "Remote, Ghana",
-        "period": "2021 - Present",
+        "period": "2020 - Present",
         "achievements": [
           "Delivered 15+ custom web applications and automation tools to clients in over 5 countries.",
           "Improved client productivity by up to 30% by developing 5+ custom PyQt desktop applications.",
@@ -134,7 +134,7 @@
         "title": "Founder & Software Engineer",
         "company": "Keymint.dev",
         "location": "Remote",
-        "period": "Jan 2023 - Jun 2024",
+        "period": "2024 - Present",
         "achievements": [
           "Architected a robust licensing backend with a REST API, enabling developers to integrate secure licensing into their applications in minutes.",
           "Developed a vendor dashboard with real-time analytics, providing valuable insights into license activation and usage patterns.",
@@ -149,7 +149,7 @@
         "degree": "Bachelor of Science in Computer Science",
         "institution": "Ghana Communication Technology University",
         "location": "Accra, Ghana",
-        "period": "2021 - 2025",
+        "period": "2022 - 2025",
         "honors": [],
         "relevant": [
           "Software Engineering",

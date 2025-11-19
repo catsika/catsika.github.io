@@ -227,30 +227,6 @@ if (contactForm) {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
             submitBtn.style.opacity = '1';
-            
-            // In a real application, you would send the data to a backend:
-            // try {
-            //     const response = await fetch('YOUR_API_ENDPOINT', {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //         },
-            //         body: JSON.stringify(data)
-            //     });
-            //     
-            //     if (response.ok) {
-            //         showNotification('Message sent successfully!', 'success');
-            //         contactForm.reset();
-            //     } else {
-            //         throw new Error('Failed to send message');
-            //     }
-            // } catch (error) {
-            //     showNotification('There was an error sending your message. Please try again.', 'error');
-            // } finally {
-            //     submitBtn.textContent = originalText;
-            //     submitBtn.disabled = false;
-            //     submitBtn.style.opacity = '1';
-            // }
         }, 1500);
     });
 }

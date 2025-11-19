@@ -147,7 +147,7 @@ const resumePreview = {
                             <span class="preview-subtitle">${project.subtitle}</span>
                         </div>
                         <p class="preview-project-description">${project.description}</p>
-                        <p class="preview-tags"><strong>Technologies:</strong> ${project.tags.join(', ')}</p>
+
                     </div>
                 `).join('')}
             </div>
@@ -469,22 +469,26 @@ async function generateResumePDF(contentData) {
         };
 
         // === HEADER SECTION ===
+        const headerYCenter = 27; // Vertical center of the 45px header
         doc.setFillColor(...colors.primary);
         doc.rect(0, 0, pageWidth, 45, 'F');
         doc.setTextColor(...colors.white);
-        
+
+        // Name
         doc.setFont(fonts.header.family, fonts.header.style);
         doc.setFontSize(fonts.header.size);
-        doc.text(personal.name, layout.margin, yPosition + 15);
+        doc.text(personal.name, layout.margin, headerYCenter - 5);
         
+        // Title
         doc.setFont(fonts.title.family, fonts.title.style);
         doc.setFontSize(fonts.title.size);
-        doc.text(personal.title, layout.margin, yPosition + 25);
-        
+        doc.text(personal.title, layout.margin, headerYCenter + 5);
+
+        // Contact Info (right-aligned)
+        const contactInfo = [personal.email, personal.githubUrl, personal.phone].filter(Boolean).join('  |  ');
         doc.setFont(fonts.contact.family, fonts.contact.style);
         doc.setFontSize(fonts.contact.size);
-        doc.text(personal.email, layout.margin, yPosition + 35);
-        doc.text(personal.githubUrl, layout.margin + 80, yPosition + 35);
+        doc.text(contactInfo, pageWidth - layout.margin, headerYCenter + 2, { align: 'right' });
         
         yPosition = 55;
 
@@ -535,21 +539,18 @@ async function generateResumePDF(contentData) {
         // === KEY PROJECTS ===
         addSection('KEY PROJECTS');
         projects.items.forEach(project => {
-            checkPageBreak(18);
-            addWrappedText(project.title, { y: yPosition, font: fonts.smallBold });
+            checkPageBreak(20);
+            
+            // Title and Subtitle
+            addWrappedText(project.title, { y: yPosition, font: fonts.bodyBold });
             if (project.subtitle) {
-                addWrappedText(project.subtitle, { x: layout.margin + 60, y: yPosition, font: fonts.italic, color: colors.lightGray });
+                addWrappedText(`(${project.subtitle})`, { x: layout.margin + doc.getTextWidth(project.title) + 2, y: yPosition, font: fonts.italic, color: colors.lightGray });
             }
-            yPosition += 4; // Reduced from 5
-            const descHeight = addWrappedText(`• ${project.description}`, { x: layout.margin + 5, y: yPosition, font: fonts.extraSmall });
-            yPosition += descHeight + 1; // Reduced from +3
+            yPosition += 6;
 
-            if (project.tags?.length > 0) {
-                addWrappedText(project.tags.join(', '), { x: layout.margin + 10, y: yPosition, font: fonts.extraSmall, color: colors.lightGray });
-                yPosition += 5; // Reduced from 6
-            } else {
-                yPosition += 1; // Reduced from 2
-            }
+            // Description
+            const descHeight = addWrappedText(`• ${project.description}`, { x: layout.margin + 4, y: yPosition, font: fonts.small, color: colors.dark });
+            yPosition += descHeight + 2;
         });
 
         // === EDUCATION ===

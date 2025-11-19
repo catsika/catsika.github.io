@@ -26,44 +26,44 @@
       },
       {
         "label": "Experience",
-        "value": "3+ Years"
+        "value": "5+ Years"
       }
     ],
-    "lede": "A <strong>Full-Stack Software Engineer</strong> and <strong>SaaS Founder</strong> with 3+ years of experience transforming innovative ideas into robust, production-ready software solutions. Creator of <em>TidyList</em> and <em>Keymint.dev</em>, specializing in modern web applications, secure authentication systems, and technical SEO."
+    "lede": "A Full-Stack Software Engineer and SaaS Founder with a passion for transforming complex problems into elegant, production-ready software. Creator of Keymint.dev, with a focus on modern web applications, secure systems, and developer tools."
   },
   "about": {
     "eyebrow": "Background",
     "title": "About",
     "intro": "I'm a Full-Stack Software Engineer and SaaS Founder with a passion for building production-ready solutions that solve real problems.",
     "paragraphs": [
-      "With 3+ years of experience, I've successfully launched multiple software-as-a-service products including <strong>TidyList</strong>—an email verification platform processing thousands of emails daily with 98% accuracy—and <strong>Keymint.dev</strong>—a secure software licensing system serving over 100 active users with advanced cryptographic validation.",
-      "As a freelance developer, I've delivered 15+ custom full-stack web applications and automation tools to global clients, consistently meeting deadlines and exceeding expectations. My technical expertise spans from frontend interfaces to backend infrastructure, payment integrations, and secure cryptographic systems. I approach every project with a focus on clean code, scalability, and user experience."
+      "With over five years of experience, I've successfully designed, built, and launched <strong>Keymint.dev</strong>—a secure, scalable software licensing service for developers. My work has empowered developers to easily manage licensing and activations through a developer-friendly API and intuitive dashboard.",
+      "As a freelance developer, I've delivered over 15 custom full-stack web applications and automation tools to a global clientele. I specialize in building robust backend systems, secure payment integrations, and high-performance frontend interfaces, always with a focus on clean code, scalability, and user experience."
     ],
     "quote": "Building software isn't just about writing code—it's about understanding problems deeply and crafting solutions that stand the test of time.",
     "skills": [
       {
         "title": "Frontend Development",
-        "description": "React.js, JavaScript, TypeScript, HTML5/CSS3, Tailwind CSS. Building responsive, modern user interfaces with focus on performance and user experience."
+        "description": "Building responsive, high-performance user interfaces with React.js, TypeScript, and modern CSS frameworks. Focused on creating exceptional user experiences."
       },
       {
         "title": "Backend Development",
-        "description": "Node.js, Python, Supabase (PostgreSQL), Firebase, Neon.tech. Creating robust APIs and scalable backend systems with secure authentication."
+        "description": "Designing and building robust, scalable APIs and backend systems with Node.js and Python. Experienced with both SQL and NoSQL databases (PostgreSQL, Firebase)."
       },
       {
         "title": "Security & Cryptography",
-        "description": "Cryptographic signatures, license key systems, public key verification. Implementing secure authentication and licensing solutions."
+        "description": "Implementing secure authentication and licensing solutions using cryptographic signatures and public key verification."
       },
       {
         "title": "SaaS Development",
-        "description": "Product development, Stripe integration, user authentication, analytics dashboards. Building complete software-as-a-service platforms from scratch."
+        "description": "Leading end-to-end SaaS development, from product ideation and architecture to Stripe integration and analytics."
       },
       {
         "title": "Desktop Applications",
-        "description": "PyQt development for creating cross-platform desktop applications. Built 5+ custom tools improving client productivity by up to 30%."
+        "description": "Creating cross-platform desktop applications with PyQt that have improved client productivity by up to 30%."
       },
       {
         "title": "SEO & Analytics",
-        "description": "Technical SEO, metadata structuring, keyword optimization, Google Search Console. Enhancing web visibility and search performance."
+        "description": "Improving web visibility and search performance through technical SEO, structured data, and analytics."
       }
     ]
   },
@@ -76,30 +76,17 @@
         "featured": true,
         "title": "Keymint.dev",
         "subtitle": "Software License Management System",
-        "description": "Developer-first licensing platform with cryptographic signature validation. Supports offline/online modes, serving 100+ active users with enterprise-grade security.",
-        "tags": ["React", "Node.js", "Cryptography", "PostgreSQL", "TypeScript"],
+        "description": "A secure, scalable software licensing service for developers, featuring a REST API, a vendor dashboard, and support for multiple licensing models. Keymint provides actionable insights and empowers developers to manage their software with ease.",
         "link": {
           "url": "https://keymint.dev",
           "text": "Visit Keymint.dev"
         }
       },
       {
-        "featured": true,
-        "title": "TidyList",
-        "subtitle": "Email Verification SaaS Platform",
-        "description": "Email verification SaaS platform processing thousands of emails daily with 98% accuracy. Complete full-stack solution with Stripe payments and RESTful API.",
-        "tags": ["Node.js", "React", "Supabase", "Stripe", "PostgreSQL"],
-        "link": {
-          "url": null,
-          "text": null
-        }
-      },
-      {
         "featured": false,
         "title": "GitHub Email Scraper",
         "subtitle": "Open Source CLI Tool",
-        "description": "Python CLI tool for efficiently scraping public contributor emails from GitHub repositories. Implements ethical scraping practices and reduced manual data collection time by 80%.",
-        "tags": ["Python", "CLI", "GitHub API", "Open Source"],
+        "description": "An open-source Python CLI for ethically scraping public contributor emails from GitHub repositories, reducing manual data collection time by over 80%.",
         "link": {
           "url": "https://github.com/catsika/github-email-scraper",
           "text": "View on GitHub"
@@ -113,11 +100,13 @@
     "intro": "I'm always open to discussing new projects, collaboration opportunities, or simply connecting with fellow developers and entrepreneurs. Whether you have a product idea, need technical consulting, or want to explore working together, I'd love to hear from you.",
     "methods": [
       {
+        "number": "01",
         "title": "Email",
         "value": "atsikaclifford414@gmail.com",
         "link": "mailto:atsikaclifford414@gmail.com"
       },
       {
+        "number": "02",
         "title": "GitHub",
         "value": "github.com/catsika",
         "link": "https://github.com/catsika"
@@ -126,7 +115,7 @@
     "formTitle": "Send a Message"
   },
   "resume": {
-    "objective": "Full-Stack Software Engineer with 3+ years building scalable SaaS platforms, secure cryptographic systems, and automation solutions. Eager to contribute technical expertise in a collaborative setting.",
+    "objective": "Full-Stack Software Engineer with 5+ years building scalable SaaS platforms, secure cryptographic systems, and automation solutions. Eager to contribute technical expertise in a collaborative setting.",
     "experience": [
       {
         "title": "Freelance Full-Stack Developer",
@@ -134,24 +123,11 @@
         "location": "Remote, Ghana",
         "period": "2021 - Present",
         "achievements": [
-          "Delivered 15+ custom web applications and automation tools to clients across 5 countries",
-          "Developed 5+ PyQt desktop applications improving client productivity by 30%",
-          "Integrated secure Stripe billing systems for 8+ platforms, enhancing payment security",
-          "Managed 20+ projects across global time zones with 100% client satisfaction",
-          "Optimized client websites for SEO, increasing organic traffic by 40% average"
-        ]
-      },
-      {
-        "title": "Founder & Lead Developer",
-        "company": "TidyList",
-        "location": "Remote",
-        "period": "Jan 2024 - Jun 2024",
-        "achievements": [
-          "Architected email verification SaaS processing thousands of emails daily",
-          "Achieved 98% accuracy in email validation using custom algorithms",
-          "Implemented Stripe payment processing and subscription management",
-          "Built RESTful API with comprehensive documentation",
-          "Managed end-to-end infrastructure with 99.9% uptime"
+          "Delivered 15+ custom web applications and automation tools to clients in over 5 countries.",
+          "Improved client productivity by up to 30% by developing 5+ custom PyQt desktop applications.",
+          "Engineered and integrated secure Stripe billing systems for 8+ platforms.",
+          "Successfully managed over 20 projects across global time zones, maintaining 100% client satisfaction.",
+          "Boosted client organic traffic by an average of 40% through targeted SEO optimizations."
         ]
       },
       {
@@ -160,11 +136,11 @@
         "location": "Remote",
         "period": "Jan 2023 - Jun 2024",
         "achievements": [
-          "Developed cryptographic licensing platform serving 100+ active users",
-          "Implemented Ed25519 signature-based online/offline license validation",
-          "Created developer-friendly SDK and API with multi-language examples",
-          "Built admin dashboard with real-time analytics",
-          "Designed secure key generation preventing unauthorized distribution"
+          "Architected a robust licensing backend with a REST API, enabling developers to integrate secure licensing into their applications in minutes.",
+          "Developed a vendor dashboard with real-time analytics, providing valuable insights into license activation and usage patterns.",
+          "Implemented multiple licensing models (perpetual, subscription, trial) to provide flexible options for software developers.",
+          "Designed a self-service customer portal, reducing support overhead and empowering end-users to manage their own licenses.",
+          "Ensured high security and reliability, building trust with a growing base of developers."
         ]
       }
     ],
@@ -189,8 +165,7 @@
     "certifications": [],
     "achievements": [
       "Published open-source GitHub Email Scraper used by 200+ developers",
-      "Reduced data collection time by 80% for research teams",
-      "Contributed to 10+ open-source projects with 500+ combined stars"
+      "Reduced data collection time by 80% for research teams"
     ],
     "languages": [
       {

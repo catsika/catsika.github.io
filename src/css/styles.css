@@ -344,7 +344,7 @@ section:last-of-type {
 
 .btn-resume {
     padding: 0.5rem 1.25rem !important;
-    background: var(--color-accent);
+    background: var(--color-text);
     color: var(--color-white);
     border-radius: 3px;
     font-weight: var(--font-weight-semibold);
@@ -355,7 +355,7 @@ section:last-of-type {
 }
 
 .btn-resume:hover {
-    background: var(--color-accent-dark);
+    background: var(--color-text-muted);
     color: var(--color-white);
     transform: none;
     box-shadow: 0 2px 8px rgba(50, 104, 145, 0.25);

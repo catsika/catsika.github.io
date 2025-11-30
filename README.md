@@ -1,4 +1,4 @@
-# Clifford Atsika - Portfolio
+# Portfolio
 
 A modern, responsive portfolio website built with HTML, CSS, and JavaScript.
 Features a "Premium Modern" aesthetic with dark mode, glassmorphism, and dynamic interactions.

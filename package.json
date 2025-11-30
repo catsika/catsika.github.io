@@ -1,5 +1,5 @@
 {
-  "name": "portfolio-site",
+  "name": "catsika.github.io",
   "version": "1.0.0",
   "description": "Modern portfolio and CV website",
   "main": "src/index.html",
@@ -15,7 +15,7 @@
     "website",
     "developer"
   ],
-  "author": "Your Name",
+  "author": "Clifford Atsika",
   "license": "MIT",
   "devDependencies": {
     "live-server": "^1.2.2"

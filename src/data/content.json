@@ -29,52 +29,51 @@
         "value": "5+ Years"
       }
     ],
-    "lede": "A Full-Stack Software Engineer and SaaS Founder with a passion for transforming complex problems into elegant, production-ready software. Creator of Keymint.dev, with a focus on modern web applications, secure systems, and developer tools."
+    "lede": "Full-Stack Engineer and SaaS Founder building production-ready software. Creator of Keymint.dev, specializing in secure systems and developer tools."
   },
   "about": {
     "eyebrow": "Background",
     "title": "About",
-    "intro": "I'm a Full-Stack Software Engineer and SaaS Founder with a passion for building production-ready solutions that solve real problems.",
+    "intro": "Full-Stack Engineer and SaaS Founder building production-ready solutions that solve real problems.",
     "paragraphs": [
-      "With over five years of experience, I've successfully designed, built, and launched <strong>Keymint.dev</strong>—a secure, scalable software licensing service for developers. My work has empowered developers to easily manage licensing and activations through a developer-friendly API and intuitive dashboard.",
-      "As a freelance developer, I've delivered over 15 custom full-stack web applications and automation tools to a global clientele. I specialize in building robust backend systems, secure payment integrations, and high-performance frontend interfaces, always with a focus on clean code, scalability, and user experience."
+      "With over five years of experience, I've designed and launched <strong>Keymint.dev</strong>—a secure licensing infrastructure for developers. My work empowers developers to manage licensing through a robust API and intuitive dashboard.",
+      "As a freelance developer, I've delivered 15+ custom web apps and automation tools globally. I specialize in robust backend systems, secure payments, and high-performance interfaces, focusing on clean code and scalability."
     ],
     "quote": "Building software isn't just about writing code—it's about understanding problems deeply and crafting solutions that stand the test of time.",
-   "skills": [
-  {
-    "title": "Frontend Development",
-    "description": "Experienced in building fast, responsive and accessible interfaces using React, Next.js, and TypeScript. Skilled with Tailwind CSS, component libraries, and modern UI patterns optimized for developer-facing tools."
-  },
-  {
-    "title": "Backend Development",
-    "description": "Designing scalable APIs and services with Node.js and Python, using PostgreSQL, Neon.tech, Supabase, and Firebase. Strong understanding of authentication, rate limiting, job queues, and cloud deployments on Vercel and serverless platforms."
-  },
-  {
-    "title": "Security & Cryptography",
-    "description": "Implementing secure authentication systems and offline licensing using Ed25519 signatures, JWT, public key verification, and cryptographic best practices. Experience building licensing flows similar to Keygen and RustDesk."
-  },
-  {
-    "title": "SaaS & Developer Tools",
-    "description": "Building complete SaaS platforms end-to-end — product architecture, dashboard UX, payment integration (Stripe), analytics (PostHog), user management, and automated workflows. Creator of Keymint.dev, a modern licensing platform."
-  },
-  {
-    "title": "Desktop Applications",
-    "description": "Developing cross-platform desktop software with PyQt and Python, including automation tools and productivity apps that improved client workflows by up to 30%."
-  },
-  {
-    "title": "Databases & Infrastructure",
-    "description": "Proficient with PostgreSQL, Neon.tech, Supabase, Upstash Redis, and Firebase. Understanding of distributed systems principles, caching, database design, and cloud deployments with Vercel and AWS-backed services."
-  },
-  {
-    "title": "Payments & Integrations",
-    "description": "Integrating secure and reliable payment systems using Stripe and CoinPayments. Experience with webhooks, subscription management, API-based billing, and customer dashboards."
-  },
-  {
-    "title": "SEO & Analytics",
-    "description": "Improving site visibility through technical SEO, metadata optimization, clean semantic HTML, structured data, and analytics-driven iteration using PostHog and Search Console."
-  }
-]
-
+    "skills": [
+      {
+        "title": "Frontend Development",
+        "description": "Building fast, accessible interfaces with React, Next.js, and TypeScript. Expert in Tailwind CSS and modern UI patterns."
+      },
+      {
+        "title": "Backend Development",
+        "description": "Designing scalable APIs with Node.js and Python. Proficient in PostgreSQL, Supabase, and Firebase, with a focus on auth and cloud deployments."
+      },
+      {
+        "title": "Security & Cryptography",
+        "description": "Implementing secure auth and offline licensing using Ed25519, JWT, and best practices. Experienced in building robust licensing flows."
+      },
+      {
+        "title": "SaaS & Developer Tools",
+        "description": "Building end-to-end SaaS platforms: architecture, UX, Stripe payments, and analytics. Creator of Keymint.dev."
+      },
+      {
+        "title": "Desktop Applications",
+        "description": "Developing cross-platform desktop tools with PyQt and Python, automating workflows to boost productivity."
+      },
+      {
+        "title": "Databases & Infrastructure",
+        "description": "Proficient with PostgreSQL, Redis, and cloud infrastructure. Skilled in database design and distributed systems."
+      },
+      {
+        "title": "Payments & Integrations",
+        "description": "Integrating reliable payment systems like Stripe. Experienced with webhooks, subscriptions, and billing logic."
+      },
+      {
+        "title": "SEO & Analytics",
+        "description": "Optimizing visibility via technical SEO and semantic HTML. Driving iteration with PostHog and Search Console analytics."
+      }
+    ]
   },
   "projects": {
     "eyebrow": "Portfolio",
@@ -85,7 +84,7 @@
         "featured": true,
         "title": "Keymint.dev",
         "subtitle": "Software License Management System",
-        "description": "A secure, scalable software licensing service for developers, featuring a REST API and a vendor dashboard to manage product licenses with ease.",
+        "description": "Secure, scalable licensing infrastructure for developers. Features REST API, vendor dashboard, and real-time analytics.",
         "link": {
           "url": "https://keymint.dev",
           "text": "Visit Keymint.dev"
@@ -95,7 +94,7 @@
         "featured": false,
         "title": "GitHub Email Scraper",
         "subtitle": "Open Source CLI Tool",
-        "description": "An open-source Python CLI for ethically scraping public contributor emails from GitHub repositories, reducing manual data collection time by over 80%.",
+        "description": "Python CLI for ethically scraping public contributor emails. Reduces manual data collection time by over 80%.",
         "link": {
           "url": "https://github.com/catsika/github-email-scraper",
           "text": "View on GitHub"
@@ -106,7 +105,7 @@
   "contact": {
     "eyebrow": "Get In Touch",
     "title": "Let's Connect",
-    "intro": "I'm always open to discussing new projects, collaboration opportunities, or simply connecting with fellow developers and entrepreneurs. Whether you have a product idea, need technical consulting, or want to explore working together, I'd love to hear from you.",
+    "intro": "Open to new projects and collaborations. Whether you have a product idea or need technical consulting, I'd love to hear from you.",
     "methods": [
       {
         "number": "01",
@@ -124,7 +123,7 @@
     "formTitle": "Send a Message"
   },
   "resume": {
-    "objective": "A results-oriented Full-Stack Software Engineer with 3+ years of experience in designing, developing, and deploying scalable SaaS platforms and automation tools. Proven ability to translate complex business requirements into high-quality, production-ready software.",
+    "objective": "Full-Stack Engineer with 3+ years experience shipping scalable SaaS platforms. Expert in translating business needs into production software.",
     "experience": [
       {
         "title": "Freelance Full-Stack Developer",

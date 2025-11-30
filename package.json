@@ -4,8 +4,8 @@
   "description": "Modern portfolio and CV website",
   "main": "src/index.html",
   "scripts": {
-    "start": "npx live-server src --port=3000",
-    "dev": "npx live-server src --port=3000 --watch=src",
+    "start": "npx live-server . --port=3000",
+    "dev": "npx live-server . --port=3000 --watch=.",
     "build": "echo 'Build step - add your build process here'"
   },
   "keywords": [

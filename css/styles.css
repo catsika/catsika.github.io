@@ -342,6 +342,10 @@ section {
     gap: 1rem;
 }
 
+.btn-resume-mobile {
+    display: none;
+}
+
 .scroll-indicator {
     position: absolute;
     bottom: 2rem;
@@ -645,6 +649,42 @@ section {
 }
 
 /* ===========================
+   Back to Top Button
+   =========================== */
+
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    box-shadow: 0 4px 12px var(--color-primary-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 20px var(--color-primary-glow);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===========================
    Responsive
    =========================== */
 
@@ -652,6 +692,15 @@ section {
     .hero-meta {
         flex-direction: column;
         gap: 1.5rem;
+    }
+
+    .hero-cta {
+        flex-wrap: wrap;
+    }
+
+    .btn-resume-mobile {
+        display: inline-flex;
+        color: var(--color-primary);
     }
 
     .contact-content {

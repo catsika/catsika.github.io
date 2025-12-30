@@ -131,7 +131,9 @@ function populateAbout() {
             <div class="skill-card">
                 <div class="skill-number">${String(index + 1).padStart(2, '0')}</div>
                 <h4>${skill.title}</h4>
-                <p>${skill.description}</p>
+                <div class="skill-tags">
+                    ${skill.description.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
+                </div>
             </div>
         `).join('');
     }

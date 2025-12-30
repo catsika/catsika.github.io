@@ -35,42 +35,50 @@
     "title": "About",
     "intro": "Full-Stack Engineer and SaaS Founder building production-ready solutions that solve real problems.",
     "paragraphs": [
-      "With over five years of experience, I've designed and launched <strong>Keymint.dev</strong>—a secure licensing infrastructure for developers. My work empowers developers to manage licensing through a robust API and intuitive dashboard.",
-      "As a freelance developer, I've delivered 15+ custom web apps and automation tools globally. I specialize in robust backend systems, secure payments, and high-performance interfaces, focusing on clean code and scalability."
+      "With 5+ years of experience, I specialize in building <strong>secure, scalable SaaS platforms</strong>. I created Keymint.dev, a developer-first licensing system serving enterprise users.",
+      "I also partner with global clients to deliver high-performance web applications, focusing on clean architecture and optimal user experience."
     ],
     "quote": "Building software isn't just about writing code—it's about understanding problems deeply and crafting solutions that stand the test of time.",
     "skills": [
       {
-        "title": "Frontend Development",
-        "description": "Building fast, accessible interfaces with React, Next.js, and TypeScript. Expert in Tailwind CSS and modern UI patterns."
+        "title": "Full-Stack Development",
+        "description": [
+          "React",
+          "Next.js",
+          "Node.js",
+          "Python",
+          "TypeScript",
+          "Tailwind CSS"
+        ]
       },
       {
-        "title": "Backend Development",
-        "description": "Designing scalable APIs with Node.js and Python. Proficient in PostgreSQL, Supabase, and Firebase, with a focus on auth and cloud deployments."
+        "title": "SaaS & Architecture",
+        "description": [
+          "Stripe Payments",
+          "Database Design",
+          "Cloud Infrastructure",
+          "REST APIs",
+          "Microservices"
+        ]
       },
       {
-        "title": "Security & Cryptography",
-        "description": "Implementing secure auth and offline licensing using Ed25519, JWT, and best practices. Experienced in building robust licensing flows."
+        "title": "Security & Systems",
+        "description": [
+          "Cryptography",
+          "Secure Auth",
+          "Licensing Systems",
+          "Distributed Systems"
+        ]
       },
       {
-        "title": "SaaS & Developer Tools",
-        "description": "Building end-to-end SaaS platforms: architecture, UX, Stripe payments, and analytics. Creator of Keymint.dev."
-      },
-      {
-        "title": "Desktop Applications",
-        "description": "Developing cross-platform desktop tools with PyQt and Python, automating workflows to boost productivity."
-      },
-      {
-        "title": "Databases & Infrastructure",
-        "description": "Proficient with PostgreSQL, Redis, and cloud infrastructure. Skilled in database design and distributed systems."
-      },
-      {
-        "title": "Payments & Integrations",
-        "description": "Integrating reliable payment systems like Stripe. Experienced with webhooks, subscriptions, and billing logic."
-      },
-      {
-        "title": "SEO & Analytics",
-        "description": "Optimizing visibility via technical SEO and semantic HTML. Driving iteration with PostHog and Search Console analytics."
+        "title": "Tools & Automation",
+        "description": [
+          "Desktop Apps (PyQt)",
+          "CLI Tools",
+          "Technical SEO",
+          "Git/CI/CD",
+          "Automation Scripts"
+        ]
       }
     ]
   },

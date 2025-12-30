@@ -44,7 +44,6 @@ document.addEventListener('click', (e) => {
 
 // Header scroll effect
 let lastScroll = 0;
-const readingProgress = document.getElementById('readingProgress');
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
@@ -63,12 +62,7 @@ window.addEventListener('scroll', () => {
         header.style.transform = 'translateY(0)';
     }
     
-    // Update reading progress bar
-    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const progress = (currentScroll / windowHeight) * 100;
-    if (readingProgress) {
-        readingProgress.style.width = progress + '%';
-    }
+
     
     lastScroll = currentScroll;
 });
@@ -522,33 +516,7 @@ rippleStyle.textContent = `
 `;
 document.head.appendChild(rippleStyle);
 
-// ===========================
-// Back to Top Button
-// ===========================
 
-const backToTopButton = document.createElement('button');
-backToTopButton.innerHTML = '↑';
-backToTopButton.className = 'back-to-top';
-backToTopButton.setAttribute('aria-label', 'Back to top');
-
-document.body.appendChild(backToTopButton);
-
-// Show/hide back to top button
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 500) {
-        backToTopButton.classList.add('visible');
-    } else {
-        backToTopButton.classList.remove('visible');
-    }
-});
-
-// Scroll to top on click
-backToTopButton.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
 
 // ===========================
 // Smooth Page Load

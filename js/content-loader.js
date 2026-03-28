@@ -132,7 +132,7 @@ function populateAbout() {
                 <div class="skill-number">${String(index + 1).padStart(2, '0')}</div>
                 <h4>${skill.title}</h4>
                 <div class="skill-tags">
-                    ${skill.description.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
+                    <p class="sans-text">${skill.description.join(', ')}</p>
                 </div>
             </div>
         `).join('');

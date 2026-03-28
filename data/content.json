@@ -12,7 +12,7 @@
   "hero": {
     "byline": {
       "label": "PROFILE",
-      "date": "2025"
+      "date": "2026"
     },
     "meta": [
       {
@@ -54,11 +54,12 @@
       {
         "title": "SaaS & Architecture",
         "description": [
-          "Stripe Payments",
+          "Payment Infrastructure",
           "Database Design",
           "Cloud Infrastructure",
           "REST APIs",
-          "Microservices"
+          "Microservices",
+          "Technical SEO"
         ]
       },
       {
@@ -75,7 +76,6 @@
         "description": [
           "Desktop Apps (PyQt)",
           "CLI Tools",
-          "Technical SEO",
           "Git/CI/CD",
           "Automation Scripts"
         ]
@@ -197,7 +197,7 @@
     ]
   },
   "footer": {
-    "copyright": "2025 Clifford Atsika. All rights reserved.",
+    "copyright": "2026 Clifford Atsika. All rights reserved.",
     "links": [
       {
         "text": "GitHub",

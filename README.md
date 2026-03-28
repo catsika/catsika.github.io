@@ -1,11 +1,11 @@
 # Portfolio
 
-A modern, responsive portfolio website built with HTML, CSS, and JavaScript.
-Features a "Premium Modern" aesthetic with dark mode, glassmorphism, and dynamic interactions.
+A clean, responsive portfolio website built with HTML, CSS, and JavaScript.
+Features a sophisticated, minimalist editorial aesthetic inspired by publications like Medium and The New York Times, utilizing a monochrome/silver color palette and elegant serif typography.
 
 ## Features
 
-- **Premium Modern Design**: Sleek dark theme with vibrant accents and glassmorphism.
+- **Editorial Design**: Clean, paper-like aesthetic with classic serif typography.
 - **Responsive Layout**: Fully responsive design that works on all devices.
 - **Dynamic Content**: Content is loaded from a JSON file for easy updates.
 - **PDF Resume Generation**: Client-side PDF generation for resumes.
